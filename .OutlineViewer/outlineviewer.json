@@ -1,0 +1,17 @@
+{
+  "Connections": {
+    "open": true
+  },
+  "NetworkTables Settings": {
+    "mode": "Client (NT3)",
+    "serverTeam": "8054"
+  },
+  "Persistent Values": {
+    "open": false
+  },
+  "transitory": {
+    "SmartDashboard": {
+      "open": true
+    }
+  }
+}

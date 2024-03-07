@@ -1,0 +1,65 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 15.05,
+        "y": 5.57
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 15.100000000000001,
+        "y": 5.57
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.235651235924438,
+        "y": 4.215901156481343
+      },
+      "prevControl": {
+        "x": 14.435651235924437,
+        "y": 4.215901156481343
+      },
+      "nextControl": {
+        "x": 13.185651235924437,
+        "y": 4.215901156481343
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 15.05,
+        "y": 5.57
+      },
+      "prevControl": {
+        "x": 15.385658209968128,
+        "y": 5.57
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 300.0,
+    "maxAngularAcceleration": 400.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Oto Red",
+  "previewStartingState": null,
+  "useDefaultConstraints": true
+}
