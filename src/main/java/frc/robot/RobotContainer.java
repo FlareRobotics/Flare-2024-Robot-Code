@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.lib.math.LimelightHelpers;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.SwerveConstants.OIConstants;
 import frc.robot.commands.Auto.FeedCommand;
@@ -39,16 +41,12 @@ public class RobotContainer {
 
         public static RobotState m_RobotState = RobotState.Idle;
 
-        SendableChooser<Command> auto_Chooser = new SendableChooser<>();
+        public SendableChooser<Command> auto_Chooser = new SendableChooser<>();
 
         boolean driverModeEnabled = false;
 
         public RobotContainer() {
-                NamedCommands.registerCommand("AutoShoot",
-                                new ParallelCommandGroup(
-                                                new ShootCommand(SHOOTER_SUBSYSTEM),
-                                                new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(0.9)
-                                                .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false)));
+                NamedCommands.registerCommand("AutoShoot", generateAutonomousShooterCommand());
 
                 NamedCommands.registerCommand("FirstShoot",
                                 new ParallelCommandGroup(
@@ -154,6 +152,13 @@ public class RobotContainer {
                                                 .andThen(new InstantCommand(() -> setControllerRumbleDriver(0))));
         }
 
+        private Command generateAutonomousShooterCommand() {
+                return new ParallelCommandGroup(
+                                new ShootCommand(SHOOTER_SUBSYSTEM),
+                                new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(0.9)
+                                .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
+        }
+
         private Command generateAutoIntakeCommand() {
                 return new CustomCommandRunner(
                                 new SequentialCommandGroup(new InstantCommand(() -> m_RobotState = RobotState.Intaking),
@@ -169,6 +174,9 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
+                if (!LimelightHelpers.getTV(""))
+                        return new SequentialCommandGroup(new WaitCommand(3), generateAutonomousShooterCommand());
+
                 return auto_Chooser.getSelected();
         }
 }

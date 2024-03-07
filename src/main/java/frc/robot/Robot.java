@@ -64,6 +64,8 @@ public class Robot extends LoggedRobot {
       RobotContainer.m_OperatorJoy.getHID().setRumble(RumbleType.kBothRumble, 0);
     }
 
+    System.out.println(m_robotContainer.auto_Chooser.getSelected().toString());
+
     if (!DriverStation.isEnabled()) {
       if (LimelightHelpers.getTV("")) {
         LimelightHelpers.setLEDMode_ForceBlink("");
