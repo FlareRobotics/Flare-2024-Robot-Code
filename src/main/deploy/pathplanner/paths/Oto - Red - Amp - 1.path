@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.2,
-        "y": 7.35
+        "x": 15.1,
+        "y": 7.25
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.25,
-        "y": 7.35
+        "x": 15.15,
+        "y": 7.25
       },
       "isLocked": false,
       "linkedName": null
@@ -51,7 +51,7 @@
   "reversed": false,
   "folder": "Oto Red",
   "previewStartingState": {
-    "rotation": 90.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
