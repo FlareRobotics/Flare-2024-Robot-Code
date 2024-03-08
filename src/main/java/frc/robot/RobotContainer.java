@@ -11,10 +11,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.lib.math.LimelightHelpers;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.SwerveConstants.OIConstants;
 import frc.robot.commands.Auto.FeedCommand;
@@ -41,17 +39,19 @@ public class RobotContainer {
 
         public static RobotState m_RobotState = RobotState.Idle;
 
-        public SendableChooser<Command> auto_Chooser = new SendableChooser<>();
+        public static SendableChooser<Command> auto_Chooser = new SendableChooser<>();
 
         boolean driverModeEnabled = false;
 
         public RobotContainer() {
                 NamedCommands.registerCommand("AutoShoot", generateAutonomousShooterCommand());
 
+                NamedCommands.registerCommand("Eject", generateAutoShooterCommand(800));
+
                 NamedCommands.registerCommand("FirstShoot",
                                 new ParallelCommandGroup(
                                                 new ShootCommand(SHOOTER_SUBSYSTEM),
-                                                new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(1.3)
+                                                new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(1.5)
                                                 .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false)));
 
                 auto_Chooser = AutoBuilder.buildAutoChooser();
@@ -129,7 +129,7 @@ public class RobotContainer {
 
                 // Manual Climb
                 m_OperatorJoy.leftBumper().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, false));
-                m_OperatorJoy.rightBumper().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, true));
+                m_OperatorJoy.rightTrigger().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, true));
         }
 
         private void setControllerRumbleOperator(double rumble) {
@@ -174,9 +174,7 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
-                if (!LimelightHelpers.getTV(""))
-                        return new SequentialCommandGroup(new WaitCommand(3), generateAutonomousShooterCommand());
-
+        
                 return auto_Chooser.getSelected();
         }
 }

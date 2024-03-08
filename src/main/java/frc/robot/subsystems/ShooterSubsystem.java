@@ -57,10 +57,17 @@ public class ShooterSubsystem extends SubsystemBase {
         if (!DriverStation.isEnabled())
             return;
 
-        if ((DriverStation.isAutonomousEnabled() && IntakeSubsystem.hasNote && !IntakeSubsystem.moveNote)
-                || shooterInitialize) {
-            setShooterRPM(ShooterConstants.shooterShootRPM);
-        } else {
+        if ((DriverStation.isAutonomousEnabled() && IntakeSubsystem.hasNote && !IntakeSubsystem.moveNote)) {
+            if (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("I")
+                    && !RobotContainer.auto_Chooser.getSelected().getName().startsWith("M")) {
+                setShooterRPM(ShooterConstants.shooterShootRPM);
+            }
+        }
+        else if(shooterInitialize) 
+    {
+        setShooterRPM(ShooterConstants.shooterShootRPM);
+    }
+        else {
             setShooterRPM(robotGoalRPM);
         }
 

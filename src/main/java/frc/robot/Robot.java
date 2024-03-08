@@ -7,6 +7,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -64,8 +65,6 @@ public class Robot extends LoggedRobot {
       RobotContainer.m_OperatorJoy.getHID().setRumble(RumbleType.kBothRumble, 0);
     }
 
-    System.out.println(m_robotContainer.auto_Chooser.getSelected().toString());
-
     if (!DriverStation.isEnabled()) {
       if (LimelightHelpers.getTV("")) {
         LimelightHelpers.setLEDMode_ForceBlink("");
@@ -91,7 +90,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     IntakeSubsystem.hasNote = true;
-    LimelightHelpers.setPipelineIndex("", 0);
+    LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 0 : 2);
     DriveSubsystem.setBrake(true);
     DriveSubsystem.resetEncoders();
     DriveSubsystem.zeroHeading();
@@ -105,7 +104,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
-    LimelightHelpers.setPipelineIndex("", 1);
+    LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 1 : 3);
     DriveSubsystem.setBrake(true);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

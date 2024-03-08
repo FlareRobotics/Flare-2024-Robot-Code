@@ -4,12 +4,14 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.math.LimelightHelpers;
 import frc.lib.math.LimelightHelpers.LimelightTarget_Fiducial;
+import frc.robot.RobotContainer;
 import frc.robot.SwerveConstants.DriveConstants;
 
 public class VisionSubsystem extends SubsystemBase{
@@ -51,7 +53,7 @@ public class VisionSubsystem extends SubsystemBase{
     double rightTimestamp = Timer.getFPGATimestamp() - (blueRightResult.latency_capture / 1000.0)
         - (blueRightResult.latency_pipeline / 1000.0);
 
-    if (blueRightResult.targets_Fiducials.length > 0) {
+    if (blueRightResult.targets_Fiducials.length > 0 && (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("M") || !DriverStation.isAutonomous())) {
       if (getAvgTA(blueRightResult.targets_Fiducials) > 0.0025) {
         poseEst.addVisionMeasurement(blueRightBotPose, rightTimestamp);
       }

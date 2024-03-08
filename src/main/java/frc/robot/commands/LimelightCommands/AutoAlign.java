@@ -34,10 +34,10 @@ public class AutoAlign extends Command {
 
         double horizontalSpeed = subsystem.xPIDController.calculate(
                 LimelightHelpers.getTargetPose3d_RobotSpace("").getX(),
-                (LimelightHelpers.getTargetPose3d_RobotSpace("").getX() > 0 ? ((Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 0.078 : 0) : (Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? -0.3 : 0));
+                (LimelightHelpers.getTargetPose3d_RobotSpace("").getX() > 0 ? ((Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? -0.07 : 0) : (Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? -0.07 : 0));
         double forwardSpeed = subsystem.yPIDController.calculate(
                 LimelightHelpers.getTargetPose3d_RobotSpace("").getZ(),
-                (LimelightHelpers.getTargetPose3d_RobotSpace("").getX() > 0 ? ((Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 1.4 : 1.525) : (Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 1.45 : 1.525));
+                (LimelightHelpers.getTargetPose3d_RobotSpace("").getX() > 0 ? ((Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 1.6 : 1.525) : (Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 1.6 : 1.525));
 
         double rotationalSpeed = subsystem.rotPIDController.calculate(LimelightHelpers.getTX(""), -7);
 

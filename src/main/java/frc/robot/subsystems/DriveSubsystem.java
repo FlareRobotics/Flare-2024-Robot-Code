@@ -101,8 +101,8 @@ public class DriveSubsystem extends SubsystemBase {
         this // Reference to this subsystem to set requirements
     );
 
-    xPIDController.setTolerance(0.05);
-    yPIDController.setTolerance(0.05);
+    xPIDController.setTolerance(0.08);
+    yPIDController.setTolerance(0.08);
     rotPIDController.setTolerance(3);
   }
 
@@ -115,7 +115,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     if (Constants.enableSmartDashboard) {
       SmartDashboard.putNumber("Gyro Angle", getModAngle());
-      SmartDashboard.putNumber("Gyro Pitch", m_gyro.getPitch().getValue());
       SmartDashboard.putString("Robot State", RobotContainer.m_RobotState.toString());
     }
 

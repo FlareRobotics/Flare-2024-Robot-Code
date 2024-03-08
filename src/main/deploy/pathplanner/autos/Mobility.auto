@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 15.1,
-      "y": 7.25
+      "y": 5.57
     },
     "rotation": 0.0
   },
@@ -12,15 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Eject"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Oto - Red - Interrupt"
+            "pathName": "Mobility"
           }
         }
       ]

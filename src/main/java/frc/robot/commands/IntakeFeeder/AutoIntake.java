@@ -1,6 +1,5 @@
 package frc.robot.commands.IntakeFeeder;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
@@ -43,7 +42,6 @@ public class AutoIntake extends Command {
     @Override
     public void end(boolean interrupted) {
         System.out.println("Auto Intake End: " + interrupted);
-        SmartDashboard.putBoolean("INTAKEEE",false);
         intakeFeederSubsystem.setIntakeSpeed(0);
     }
 
