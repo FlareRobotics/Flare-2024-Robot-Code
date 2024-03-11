@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public final class Constants 
 {
-    public static boolean enableSmartDashboard = true;
+    public static boolean enableSmartDashboard = false;
 
     public static final class IntakeConstants
     {
@@ -30,7 +30,7 @@ public final class Constants
         public static double shooterMotorKp = 5;
         public static double shooterMotorKi = 2;
         public static double shooterMotorKd = 0;
-        public static double RPMTolerance = 200;
+        public static double RPMTolerance = 50;
     }
 
     public static final class ClimbConstants

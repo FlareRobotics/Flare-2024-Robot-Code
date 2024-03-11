@@ -3,7 +3,6 @@ package frc.robot;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -72,23 +71,14 @@ public class Robot extends LoggedRobot {
         LimelightHelpers.setLEDMode_ForceOff("");
       }
     }
-    else
-    {
+    else {
       LimelightHelpers.setLEDMode_ForceOff("");
     }
-
-    SwerveModuleState[] states = new SwerveModuleState[] {
-        DriveSubsystem.m_frontLeft.getState(),
-        DriveSubsystem.m_frontRight.getState(),
-        DriveSubsystem.m_rearLeft.getState(),
-        DriveSubsystem.m_rearRight.getState()
-    };
-
-    Logger.recordOutput("Swerve States", states);
   }
 
   @Override
   public void autonomousInit() {
+    LimelightHelpers.setLEDMode_ForceOff("");
     IntakeSubsystem.hasNote = true;
     LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 0 : 2);
     DriveSubsystem.setBrake(true);
