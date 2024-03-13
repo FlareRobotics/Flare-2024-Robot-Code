@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.05,
-        "y": 5.565873600441298
+        "x": 15.08596341015792,
+        "y": 5.562647359246215
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.100000000000001,
-        "y": 5.565873600441298
+        "x": 15.035963410157919,
+        "y": 5.562647359246215
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.657241351572575,
-        "y": 5.565873600441298
+        "x": 14.207650669224307,
+        "y": 5.562647359246215
       },
       "prevControl": {
-        "x": 13.64977158121206,
-        "y": 5.565873600441298
-      },
-      "nextControl": {
-        "x": 13.66471112193309,
-        "y": 5.565873600441298
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 15.05,
-        "y": 5.565873600441298
-      },
-      "prevControl": {
-        "x": 14.386217202070712,
-        "y": 5.544065047947277
+        "x": 14.257650669224308,
+        "y": 5.562647359246215
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,11 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Oto Red",
-  "previewStartingState": null,
+  "folder": "New - Oto - Red",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }

@@ -3,48 +3,54 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.05,
-        "y": 5.565873600441298
+        "x": 14.207650669224307,
+        "y": 5.562647359246215
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.100000000000001,
-        "y": 5.565873600441298
+        "x": 14.157650669224306,
+        "y": 5.562647359246215
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.657241351572575,
-        "y": 5.565873600441298
+        "x": 13.680663024664138,
+        "y": 7.003080254377342
       },
       "prevControl": {
-        "x": 13.64977158121206,
-        "y": 5.565873600441298
+        "x": 13.730663024664139,
+        "y": 7.003080254377342
       },
       "nextControl": {
-        "x": 13.66471112193309,
-        "y": 5.565873600441298
+        "x": 13.630663024664138,
+        "y": 7.003080254377342
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.05,
-        "y": 5.565873600441298
+        "x": 14.207650669224307,
+        "y": 5.562647359246215
       },
       "prevControl": {
-        "x": 14.386217202070712,
-        "y": 5.544065047947277
+        "x": 13.866458082488206,
+        "y": 5.545081104427543
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -74.66671520694659,
+      "rotateFast": true
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -55,11 +61,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Oto Red",
-  "previewStartingState": null,
+  "folder": "New - Oto - Red",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }
