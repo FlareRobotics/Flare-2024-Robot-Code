@@ -48,7 +48,7 @@ public class VisionSubsystem extends SubsystemBase{
 
     var blueRightResult = LimelightHelpers.getLatestResults("").targetingResults;
 
-    Pose2d blueRightBotPose = blueRightResult.getBotPose2d_wpiBlue();
+    Pose2d blueRightBotPose = new Pose2d(blueRightResult.getBotPose2d_wpiBlue().getTranslation(), Rotation2d.fromDegrees(swerve.getHeading()));
 
     double rightTimestamp = Timer.getFPGATimestamp() - (blueRightResult.latency_capture / 1000.0)
         - (blueRightResult.latency_pipeline / 1000.0);
