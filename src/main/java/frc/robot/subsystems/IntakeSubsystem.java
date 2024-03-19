@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -15,7 +17,8 @@ import frc.robot.RobotState;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_VictorSPX intakeFeederMotor = new WPI_VictorSPX(IntakeConstants.intakeFeederCanID);
-    public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    //public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    public static DigitalInput intakeIRSensor = new DigitalInput(IntakeConstants.intakeIRSensorPort);
     public double lastSeenTime = 0;
 
     public IntakeSubsystem() {
@@ -80,7 +83,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public static boolean getIntakeUpperSensor() {
-        double detectedColor = intakeSecondSensor.getColor().red;
-        return detectedColor > 0.3;
+        //double detectedColor = intakeSecondSensor.getColor().red;
+        //return detectedColor > 0.3;
+        return intakeIRSensor.get();
     }
 }

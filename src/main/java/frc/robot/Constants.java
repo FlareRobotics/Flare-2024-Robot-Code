@@ -17,6 +17,7 @@ public final class Constants
         public static double intakeFeederFeedSpeedPercentage = 1;
         public static boolean intakeFeederReversed = false;
         public static NeutralMode intakeFeederNeutralMode = NeutralMode.Brake;
+        public static int intakeIRSensorPort = 1;
     }
 
     public static final class ShooterConstants
