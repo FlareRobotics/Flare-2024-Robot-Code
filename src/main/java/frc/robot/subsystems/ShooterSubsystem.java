@@ -101,6 +101,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterRPM(double RPM) {
+         if (RobotContainer.m_RobotState == RobotState.Intaking
+                || RobotContainer.m_RobotState == RobotState.MovingNoteDown) {
+            shooterMotor.set(-0.2);
+            shooterMotor2.set(-0.2);
+            return;
+        }
+
         if (RPM == 0) {
             shooterMotor.set(0);
             shooterMotor2.set(0);
