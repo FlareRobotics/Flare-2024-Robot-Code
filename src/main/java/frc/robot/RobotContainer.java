@@ -158,6 +158,7 @@ public class RobotContainer {
 
         private Command generateAutonomousShooterCommand() {
                 return new ParallelCommandGroup(
+                                new InstantCommand(() -> m_intaking = false),
                                 new ShootCommand(SHOOTER_SUBSYSTEM),
                                 new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(0.9)
                                 .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
@@ -166,7 +167,8 @@ public class RobotContainer {
         private Command generateAutoIntakeCommand() {
                 return new CustomCommandRunner(
                                 new SequentialCommandGroup(new InstantCommand(() -> m_RobotState = RobotState.Intaking),
-                                                new InstantCommand(() -> setControllerRumbleOperator(0.8)),
+                                                new InstantCommand(() -> m_intaking = true),
+                                             new InstantCommand(() -> setControllerRumbleOperator(0.8)),
                                                 new WaitUntilCommand(() -> m_RobotState != RobotState.Intaking),
                                                 new InstantCommand(() -> setControllerRumbleOperator(0)))
                                                 .onlyIf(() -> !IntakeSubsystem.hasNote),

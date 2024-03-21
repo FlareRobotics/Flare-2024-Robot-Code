@@ -17,8 +17,8 @@ import frc.robot.RobotState;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_VictorSPX intakeFeederMotor = new WPI_VictorSPX(IntakeConstants.intakeFeederCanID);
-    //public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
-    public static DigitalInput intakeIRSensor = new DigitalInput(IntakeConstants.intakeIRSensorPort);
+    public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    //public static DigitalInput intakeIRSensor = new DigitalInput(IntakeConstants.intakeIRSensorPort);
     public double lastSeenTime = 0;
 
     public IntakeSubsystem() {
@@ -83,8 +83,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public static boolean getIntakeUpperSensor() {
-        //double detectedColor = intakeSecondSensor.getColor().red;
-        //return detectedColor > 0.3;
-        return intakeIRSensor.get();
+        double detectedColor = intakeSecondSensor.getColor().red;
+        return detectedColor > 0.3;
+        //return intakeIRSensor.get();
     }
 }

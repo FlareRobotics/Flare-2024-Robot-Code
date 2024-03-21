@@ -54,9 +54,9 @@ public class VisionSubsystem extends SubsystemBase{
         - (blueRightResult.latency_pipeline / 1000.0);
 
     if (blueRightResult.targets_Fiducials.length > 0 && (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("M") || !DriverStation.isAutonomous())) {
-      if (getAvgTA(blueRightResult.targets_Fiducials) > 0.0025) {
+      if (getAvgTA(blueRightResult.targets_Fiducials) > 0.0050) {
         poseEst.addVisionMeasurement(blueRightBotPose, rightTimestamp);
-      }
+      } 
     }
 
   }
