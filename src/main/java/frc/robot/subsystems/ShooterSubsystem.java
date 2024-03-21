@@ -44,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean("INTAKING",RobotContainer.m_intaking);
         if (Constants.enableSmartDashboard) {
             SmartDashboard.putNumber("Shooter RPM",
                     shooterMotor.getVelocity().getValue() * 60);
@@ -98,8 +99,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterRPM(double RPM) {
-        if (RobotContainer.m_RobotState == RobotState.Intaking
-                || RobotContainer.m_RobotState == RobotState.MovingNoteDown) {
+        
+         if (RobotContainer.m_intaking == true) {
             shooterMotor.set(-0.2);
             shooterMotor2.set(-0.2);
             return;

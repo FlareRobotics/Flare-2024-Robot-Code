@@ -38,7 +38,7 @@ public class RobotContainer {
                         OIConstants.kOperatorControllerPort);
 
         public static RobotState m_RobotState = RobotState.Idle;
-
+        public static boolean m_intaking = false;
         public static SendableChooser<Command> auto_Chooser = new SendableChooser<>();
 
         boolean driverModeEnabled = false;
@@ -123,6 +123,10 @@ public class RobotContainer {
                 // Toggle Intake
                 m_OperatorJoy.x().whileTrue(generateAutoIntakeCommand())
                                 .onTrue(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
+
+                m_OperatorJoy.x().onTrue(new InstantCommand(() -> m_intaking = true));
+                m_OperatorJoy.x().whileFalse(new InstantCommand(() -> m_intaking = false));
+                
 
                 // Emergency Feed
                 m_OperatorJoy.a().whileTrue(new FeedCommand(INTAKE_SUBSYSTEM, false));
