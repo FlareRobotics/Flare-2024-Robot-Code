@@ -82,7 +82,7 @@ public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     resetEncoders();
-    zeroHeading();
+    zeroHeading(false);
 
     // Configure AutoBuilder last
     AutoBuilder.configureHolonomic(
@@ -272,8 +272,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /** Zeroes the heading of the robot. */
-  public static void zeroHeading() {
+  public static void zeroHeading(Boolean reverse) {
+    if(reverse){
+      m_gyro.setYaw(180);
+    }else{
     m_gyro.setYaw(0);
+    }
   }
 
   /**

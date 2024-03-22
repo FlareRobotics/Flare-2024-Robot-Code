@@ -48,14 +48,14 @@ public class VisionSubsystem extends SubsystemBase{
 
     var blueRightResult = LimelightHelpers.getLatestResults("").targetingResults;
 
-    Pose2d blueRightBotPose = new Pose2d(blueRightResult.getBotPose2d_wpiBlue().getTranslation(), Rotation2d.fromDegrees(swerve.getHeading()));
+    Pose2d blueRightBotPose = new Pose2d(blueRightResult.getBotPose2d_wpiBlue().getTranslation(), Rotation2d.fromDegrees(swerve.getHeading() + 180));
 
     double rightTimestamp = Timer.getFPGATimestamp() - (blueRightResult.latency_capture / 1000.0)
         - (blueRightResult.latency_pipeline / 1000.0);
 
     if (blueRightResult.targets_Fiducials.length > 0 && (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("M") || !DriverStation.isAutonomous())) {
       if (getAvgTA(blueRightResult.targets_Fiducials) > 0.0050) {
-        poseEst.addVisionMeasurement(blueRightBotPose, rightTimestamp);
+        //poseEst.addVisionMeasurement(blueRightBotPose, rightTimestamp);
       } 
     }
 

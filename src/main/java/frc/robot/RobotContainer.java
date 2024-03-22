@@ -134,6 +134,13 @@ public class RobotContainer {
                 // Manual Climb
                 m_OperatorJoy.leftBumper().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, false));
                 m_OperatorJoy.rightTrigger().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, true));
+
+                //Zero Heading
+                m_OperatorJoy.rightBumper().onTrue(new InstantCommand(() -> DriveSubsystem.zeroHeading(false)));
+
+                m_OperatorJoy.y().onTrue(new InstantCommand(() -> IntakeSubsystem.intakebozuk = true));
+                m_OperatorJoy.y().whileFalse(new InstantCommand(() -> IntakeSubsystem.intakebozuk = false));
+
         }
 
         private void setControllerRumbleOperator(double rumble) {

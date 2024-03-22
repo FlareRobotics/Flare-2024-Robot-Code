@@ -29,7 +29,7 @@ public class Robot extends LoggedRobot {
     Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/logs"));
     new PowerDistribution(0, ModuleType.kCTRE);
 
-    Logger.start();
+   // Logger.start();
 
     m_robotContainer = new RobotContainer();
     LimelightHelpers.setPipelineIndex("", 0);
@@ -80,12 +80,17 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousInit() {
+    if(DriverStation.getAlliance().get()== Alliance.Blue){
+      DriveSubsystem.zeroHeading(false);
+    }else{
+      DriveSubsystem.zeroHeading(false);
+    }
     LimelightHelpers.setLEDMode_ForceOff("");
     IntakeSubsystem.hasNote = true;
     LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 0 : 2);
     DriveSubsystem.setBrake(true);
     DriveSubsystem.resetEncoders();
-    DriveSubsystem.zeroHeading();
+    
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 

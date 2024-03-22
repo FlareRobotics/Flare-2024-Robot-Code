@@ -19,6 +19,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final WPI_VictorSPX intakeFeederMotor = new WPI_VictorSPX(IntakeConstants.intakeFeederCanID);
     public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
     //public static DigitalInput intakeIRSensor = new DigitalInput(IntakeConstants.intakeIRSensorPort);
+    public static  boolean intakebozuk = false;
     public double lastSeenTime = 0;
 
     public IntakeSubsystem() {
@@ -37,12 +38,14 @@ public class IntakeSubsystem extends SubsystemBase {
             SmartDashboard.putBoolean("Has Note", hasNote);
             SmartDashboard.putBoolean("Move Note", moveNote);
         }
+        SmartDashboard.putBoolean("BOZUK", intakebozuk);
 
         if (!DriverStation.isEnabled())
             return;
 
         if (DriverStation.isAutonomous() && !hasNote && !moveNote) {
             RobotContainer.m_RobotState = RobotState.Intaking;
+            RobotContainer.m_intaking = true;
         }
 
         if (ShooterSubsystem.robotGoalRPM > 0) {
@@ -83,8 +86,10 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public static boolean getIntakeUpperSensor() {
+        if(intakebozuk == false){
         double detectedColor = intakeSecondSensor.getColor().red;
         return detectedColor > 0.3;
+        }else return false;
         //return intakeIRSensor.get();
     }
 }
