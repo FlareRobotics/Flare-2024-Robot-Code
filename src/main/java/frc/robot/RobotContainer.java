@@ -85,18 +85,8 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 // Auto Align Then Shoot
                 m_DriverJoy.rightTrigger()
-                                .whileTrue(new SequentialCommandGroup(
-                                                new InstantCommand(() -> SHOOTER_SUBSYSTEM.shooterInitialize = true),
-                                                generatePathOnFlyCommand(),
-                                                generateAutoShooterCommand(ShooterConstants.shooterShootRPM)))
-                                .onFalse(new InstantCommand(() -> DRIVE_SUBSYSTEM.drive(0, 0, 0,
-                                                false, false, true)).andThen(
-                                                                new InstantCommand(
-                                                                                () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
-                                                                                .andThen(new InstantCommand(
-                                                                                                () -> IntakeSubsystem.hasNote = false))
-                                                                                .andThen(new InstantCommand(
-                                                                                                () -> SHOOTER_SUBSYSTEM.shooterInitialize = false))))
+                                .whileTrue(
+                                                generatePathOnFlyCommand())
                                 .onTrue(new InstantCommand(
                                                 () -> IntakeSubsystem.hasNote = true));
 
