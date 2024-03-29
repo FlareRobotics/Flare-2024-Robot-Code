@@ -7,10 +7,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class FeedCommand extends Command {
     private IntakeSubsystem intakeFeederSubsystem;
     private boolean waitForRPM = false;
+    private boolean isReverse = false;
 
-    public FeedCommand(IntakeSubsystem subsystem, boolean waitForRPM) {
+    public FeedCommand(IntakeSubsystem subsystem, boolean waitForRPM, boolean isReverse) {
         this.intakeFeederSubsystem = subsystem;
         this.waitForRPM = waitForRPM;
+        this.isReverse = isReverse;
         addRequirements(subsystem);
     }
 
@@ -23,7 +25,11 @@ public class FeedCommand extends Command {
     @Override
     public void execute() {
         if(ShooterSubsystem.getRPMReached(ShooterConstants.shooterShootRPM) || !waitForRPM){
+            if(isReverse){
+                intakeFeederSubsystem.setIntakeSpeed(-0.3);
+            }else{
             intakeFeederSubsystem.setIntakeSpeed(1);
+            }
         }
     }
 

@@ -51,7 +51,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("FirstShoot",
                                 new ParallelCommandGroup(
                                                 new ShootCommand(SHOOTER_SUBSYSTEM),
-                                                new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(1.5)
+                                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(1.5)
                                                 .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false)));
 
                 auto_Chooser = AutoBuilder.buildAutoChooser();
@@ -119,7 +119,7 @@ public class RobotContainer {
                 
 
                 // Emergency Feed
-                m_OperatorJoy.a().whileTrue(new FeedCommand(INTAKE_SUBSYSTEM, false));
+                m_OperatorJoy.a().whileTrue(new FeedCommand(INTAKE_SUBSYSTEM, false, false));
 
                 // Manual Climb
                 m_OperatorJoy.leftBumper().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, false));
@@ -128,8 +128,12 @@ public class RobotContainer {
                 //Zero Heading
                 m_OperatorJoy.rightBumper().onTrue(new InstantCommand(() -> DriveSubsystem.zeroHeading(false)));
 
-                m_OperatorJoy.y().onTrue(new InstantCommand(() -> IntakeSubsystem.intakebozuk = true));
-                m_OperatorJoy.y().whileFalse(new InstantCommand(() -> IntakeSubsystem.intakebozuk = false));
+                //m_OperatorJoy.y().onTrue(new InstantCommand(() -> IntakeSubsystem.intakebozuk = true));
+                //m_OperatorJoy.y().whileFalse(new InstantCommand(() -> IntakeSubsystem.intakebozuk = false));
+
+                m_OperatorJoy.b().whileTrue(new FeedCommand(INTAKE_SUBSYSTEM, false, true));
+                m_OperatorJoy.b().onTrue(new InstantCommand(() -> m_intaking = true));
+                m_OperatorJoy.b().whileFalse(new InstantCommand(() -> m_intaking = false));
 
         }
 
@@ -157,7 +161,7 @@ public class RobotContainer {
                 return new ParallelCommandGroup(
                                 new InstantCommand(() -> m_intaking = false),
                                 new ShootCommand(SHOOTER_SUBSYSTEM),
-                                new FeedCommand(INTAKE_SUBSYSTEM, true)).withTimeout(0.9)
+                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(0.9)
                                 .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
         }
 

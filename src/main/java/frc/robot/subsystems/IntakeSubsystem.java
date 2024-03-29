@@ -86,7 +86,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public static boolean getIntakeUpperSensor() {
-        if(intakebozuk == false){
+        if(!DriverStation.isTeleop()){
         double detectedColor = intakeSecondSensor.getColor().red;
         return detectedColor > 0.3;
         }else return false;
