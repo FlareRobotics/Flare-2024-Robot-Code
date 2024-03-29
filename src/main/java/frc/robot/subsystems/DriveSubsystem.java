@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.LimelightHelpers;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.SwerveConstants.AutoConstants;
 import frc.robot.SwerveConstants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -115,7 +114,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     if (Constants.enableSmartDashboard) {
       SmartDashboard.putNumber("Gyro Angle", getModAngle());
-      SmartDashboard.putString("Robot State", RobotContainer.m_RobotState.toString());
     }
 
     // Update the odometry in the periodic block

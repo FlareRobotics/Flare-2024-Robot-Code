@@ -3,19 +3,17 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.RobotState;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
     private static TalonFX shooterMotor = new TalonFX(ShooterConstants.shooterCanID);
     private TalonFX shooterMotor2 = new TalonFX(ShooterConstants.shooter2CanID);
-    public static double robotGoalRPM = 0;
-    public boolean shooterInitialize = false;
 
     private final VelocityTorqueCurrentFOC m_torqueVelocity = new VelocityTorqueCurrentFOC(0, 0, 0, 1, false, false,
             false);
@@ -52,36 +50,6 @@ public class ShooterSubsystem extends SubsystemBase {
                     shooterMotor2.getVelocity().getValue() * 60);
             SmartDashboard.putNumber("Shooter Temp", shooterMotor.getDeviceTemp().getValueAsDouble());
             SmartDashboard.putNumber("Shooter 2 Temp", shooterMotor2.getDeviceTemp().getValueAsDouble());
-            SmartDashboard.putNumber("Shooter Goal RPM", robotGoalRPM);
-        }
-
-        if (!DriverStation.isEnabled())
-            return;
-
-        if ((DriverStation.isAutonomousEnabled() && IntakeSubsystem.hasNote && !IntakeSubsystem.moveNote)) {
-            if (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("I")
-                    && !RobotContainer.auto_Chooser.getSelected().getName().startsWith("M")) {
-                setShooterRPM(ShooterConstants.shooterShootRPM);
-            }
-        }
-        else if(shooterInitialize) 
-    {
-        setShooterRPM(ShooterConstants.shooterShootRPM);
-    }
-        else {
-            setShooterRPM(robotGoalRPM);
-        }
-
-        if (RobotContainer.m_RobotState == RobotState.ShooterReady && robotGoalRPM <= 0)
-            RobotContainer.m_RobotState = RobotState.Idle;
-
-        if (getRPMReached(robotGoalRPM)
-                && (RobotContainer.m_RobotState == RobotState.NoteReady
-                        || RobotContainer.m_RobotState == RobotState.ShooterNotReady
-                        || RobotContainer.m_RobotState == RobotState.ShooterReady)) {
-            RobotContainer.m_RobotState = RobotState.ShooterReady;
-        } else if (RobotContainer.m_RobotState == RobotState.NoteReady) {
-            RobotContainer.m_RobotState = RobotState.ShooterNotReady;
         }
     }
 
@@ -101,14 +69,54 @@ public class ShooterSubsystem extends SubsystemBase {
         return percentage;
     }
 
-    public void setShooterRPM(double RPM) {
-        
-         if (RobotContainer.m_intaking == true) {
-            shooterMotor.set(-0.2);
-            shooterMotor2.set(-0.2);
-            return;
-        }
+    public Command setShooterRPM(double RPM)
+    {
+        return Commands.runOnce(() -> setLocalShooterRPM(RPM));
+    }
 
+    public Command revertShooterRun()
+    {
+        return Commands.runOnce(() -> revertShooterRunLocal());
+    }
+
+    public Command shootNote()
+    {
+        return Commands.sequence(setShooterRPM(ShooterConstants.shooterShootRPM),
+        Commands.waitUntil(() -> getRPMReached(ShooterConstants.shooterShootRPM)),
+        RobotContainer.INTAKE_SUBSYSTEM.setIntakeSpeed(1),
+        Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
+        Commands.waitSeconds(0.3),
+        stopShooters().alongWith(RobotContainer.INTAKE_SUBSYSTEM.stopIntakeMotors()));
+    }
+
+    public Command ejectNote()
+    {
+        return Commands.sequence(setShooterRPM(800),
+        Commands.waitUntil(() -> getRPMReached(800)),
+        RobotContainer.INTAKE_SUBSYSTEM.setIntakeSpeed(1),
+        Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
+        Commands.waitSeconds(0.3),
+        stopShooters().alongWith(RobotContainer.INTAKE_SUBSYSTEM.stopIntakeMotors()));
+    }
+
+    public Command stopShooters()
+    {
+        return Commands.runOnce(() -> stopShootersLocal());
+    }
+
+    private void stopShootersLocal()
+    {
+        shooterMotor.stopMotor();
+        shooterMotor2.stopMotor();
+    }
+
+    private void revertShooterRunLocal()
+    {
+        shooterMotor.set(-0.2);
+        shooterMotor2.set(-0.2);
+    }
+
+    public void setLocalShooterRPM(double RPM) {
         if (RPM == 0) {
             shooterMotor.set(0);
             shooterMotor2.set(0);
