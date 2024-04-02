@@ -58,7 +58,6 @@ public class VisionSubsystem extends SubsystemBase{
         poseEst.addVisionMeasurement(blueRightBotPose, rightTimestamp);
       }
     }
-
   }
 
   public Pose2d getCurrentPose() {

@@ -37,6 +37,7 @@ public class RobotContainer {
 
         public RobotContainer() {
                 NamedCommands.registerCommand("AutoShoot", SHOOTER_SUBSYSTEM.shootNote());
+                NamedCommands.registerCommand("GrabNote", INTAKE_SUBSYSTEM.grabNote());
 
                 auto_Chooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData(auto_Chooser);
