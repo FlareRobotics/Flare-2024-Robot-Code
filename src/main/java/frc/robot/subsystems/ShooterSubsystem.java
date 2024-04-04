@@ -42,7 +42,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("INTAKING",RobotContainer.m_intaking);
         if (Constants.enableSmartDashboard) {
             SmartDashboard.putNumber("Shooter RPM",
                     shooterMotor.getVelocity().getValue() * 60);
@@ -69,49 +68,42 @@ public class ShooterSubsystem extends SubsystemBase {
         return percentage;
     }
 
-    public Command setShooterRPM(double RPM)
-    {
+    public Command setShooterRPM(double RPM) {
         return Commands.runOnce(() -> setLocalShooterRPM(RPM));
     }
 
-    public Command revertShooterRun()
-    {
+    public Command revertShooterRun() {
         return Commands.runOnce(() -> revertShooterRunLocal());
     }
 
-    public Command shootNote()
-    {
+    public Command shootNote() {
         return Commands.sequence(setShooterRPM(ShooterConstants.shooterShootRPM),
-        Commands.waitUntil(() -> getRPMReached(ShooterConstants.shooterShootRPM)),
-        RobotContainer.INTAKE_SUBSYSTEM.setIntakeSpeed(1),
-        Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
-        Commands.waitSeconds(0.3),
-        stopShooters().alongWith(RobotContainer.INTAKE_SUBSYSTEM.stopIntakeMotors()));
+                Commands.waitUntil(() -> getRPMReached(ShooterConstants.shooterShootRPM)),
+                RobotContainer.INTAKE_SUBSYSTEM.setIntakeSpeed(1),
+                Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
+                Commands.waitSeconds(0.3),
+                stopShooters().alongWith(RobotContainer.INTAKE_SUBSYSTEM.stopIntakeMotors()));
     }
 
-    public Command ejectNote()
-    {
+    public Command ejectNote() {
         return Commands.sequence(setShooterRPM(800),
-        Commands.waitUntil(() -> getRPMReached(800)),
-        RobotContainer.INTAKE_SUBSYSTEM.setIntakeSpeed(1),
-        Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
-        Commands.waitSeconds(0.3),
-        stopShooters().alongWith(RobotContainer.INTAKE_SUBSYSTEM.stopIntakeMotors()));
+                Commands.waitUntil(() -> getRPMReached(800)),
+                RobotContainer.INTAKE_SUBSYSTEM.setIntakeSpeed(1),
+                Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
+                Commands.waitSeconds(0.3),
+                stopShooters().alongWith(RobotContainer.INTAKE_SUBSYSTEM.stopIntakeMotors()));
     }
 
-    public Command stopShooters()
-    {
+    public Command stopShooters() {
         return Commands.runOnce(() -> stopShootersLocal());
     }
 
-    private void stopShootersLocal()
-    {
+    private void stopShootersLocal() {
         shooterMotor.stopMotor();
         shooterMotor2.stopMotor();
     }
 
-    private void revertShooterRunLocal()
-    {
+    private void revertShooterRunLocal() {
         shooterMotor.set(-0.2);
         shooterMotor2.set(-0.2);
     }

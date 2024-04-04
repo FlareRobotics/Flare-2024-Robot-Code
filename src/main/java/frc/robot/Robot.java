@@ -29,7 +29,8 @@ public class Robot extends LoggedRobot {
     Logger.start();
 
     m_robotContainer = new RobotContainer();
-    LimelightHelpers.setPipelineIndex("", 0);
+    int[] validIDs = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    LimelightHelpers.SetFiducialIDFiltersOverride("", validIDs);
   }
 
   @Override
@@ -70,7 +71,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     LimelightHelpers.setLEDMode_ForceOff("");
-    LimelightHelpers.setPipelineIndex("", 0);
     DriveSubsystem.setBrake(true);
     DriveSubsystem.resetEncoders();
     DriveSubsystem.zeroHeading();
@@ -84,7 +84,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
-    LimelightHelpers.setPipelineIndex("", 1);
+    int[] validIDs = {7,4};
+    LimelightHelpers.SetFiducialIDFiltersOverride("", validIDs);
     DriveSubsystem.setBrake(true);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

@@ -30,7 +30,6 @@ public class RobotContainer {
         public static CommandXboxController m_OperatorJoy = new CommandXboxController(
                         OIConstants.kOperatorControllerPort);
 
-        public static boolean m_intaking = false;
         public static SendableChooser<Command> auto_Chooser = new SendableChooser<>();
 
         boolean driverModeEnabled = false;
