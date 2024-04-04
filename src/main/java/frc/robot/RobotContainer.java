@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -62,8 +63,6 @@ public class RobotContainer {
                                                                                                                 / 2.00d,
                                                                                                 true, true, true),
                                                                 DRIVE_SUBSYSTEM));
-
-                INTAKE_SUBSYSTEM.setDefaultCommand(INTAKE_SUBSYSTEM.grabNote());
         }
 
         private void configureButtonBindings() {
@@ -83,10 +82,11 @@ public class RobotContainer {
                                                 SHOOTER_SUBSYSTEM.ejectNote()))
                                         .onFalse(SHOOTER_SUBSYSTEM.stopShooters().alongWith(INTAKE_SUBSYSTEM.stopIntakeMotors()));
 
-                m_OperatorJoy.x().toggleOnTrue(new SequentialCommandGroup(new ParallelDeadlineGroup(
+                m_OperatorJoy.x().whileTrue(new SequentialCommandGroup(new ParallelDeadlineGroup(
                                                 Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
                                                 Commands.run(() -> setControllerRumbleOperator(0.8))),
-                                                Commands.run(() -> setControllerRumbleOperator(0)),INTAKE_SUBSYSTEM.grabNote().handleInterrupt(() -> INTAKE_SUBSYSTEM.stopIntakeMotors())));
+                                               new ParallelCommandGroup(Commands.run(() -> setControllerRumbleOperator(0)),INTAKE_SUBSYSTEM.grabNote())))
+                                .onFalse(INTAKE_SUBSYSTEM.stopIntakeMotors().alongWith(SHOOTER_SUBSYSTEM.stopShooters()));
 
                 m_OperatorJoy.rightTrigger().whileTrue(CLIMB_SUBSYSTEM.setClimbSpeed(true));
                 m_OperatorJoy.leftTrigger().whileTrue(CLIMB_SUBSYSTEM.setClimbSpeed(false));

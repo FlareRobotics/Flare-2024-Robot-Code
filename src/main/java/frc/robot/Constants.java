@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public final class Constants 
 {
-    public static boolean enableSmartDashboard = false;
+    public static boolean enableSmartDashboard = true;
 
     public static final class IntakeConstants
     {

@@ -13,7 +13,7 @@ import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_VictorSPX intakeFeederMotor = new WPI_VictorSPX(IntakeConstants.intakeFeederCanID);
-    public static final DigitalInput intakeSensor = new DigitalInput(2);
+    public static final DigitalInput intakeSensor = new DigitalInput(0);
     public double lastSeenTime = 0;
 
     public IntakeSubsystem() {
@@ -37,7 +37,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public Command grabNote()
     {
         return Commands.sequence(
-            setIntakeSpeed(1).alongWith(RobotContainer.SHOOTER_SUBSYSTEM.revertShooterRun()),
+            setIntakeSpeed(0.7).alongWith(RobotContainer.SHOOTER_SUBSYSTEM.revertShooterRun()),
             Commands.waitUntil(() -> getIntakeUpperSensor()),
             stopIntakeMotors().alongWith(RobotContainer.SHOOTER_SUBSYSTEM.stopShooters())
         );

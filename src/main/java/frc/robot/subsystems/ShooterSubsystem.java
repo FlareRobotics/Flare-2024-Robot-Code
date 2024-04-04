@@ -115,8 +115,8 @@ public class ShooterSubsystem extends SubsystemBase {
             return;
         }
 
-        shooterMotor.setControl(m_torqueVelocity.withVelocity((RPM / 60)));
-        shooterMotor2.setControl(m_torqueVelocity2.withVelocity(convertToPercent((RPM / 60), 100)));
+        shooterMotor.setControl(m_torqueVelocity.withVelocity((0 / 60)));
+        shooterMotor2.setControl(m_torqueVelocity2.withVelocity(convertToPercent((0 / 60), 100)));
     }
 
     public static boolean getRPMReached(double goalRPM) {
