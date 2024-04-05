@@ -39,8 +39,9 @@ public class IntakeSubsystem extends SubsystemBase {
         return Commands.sequence(
             setIntakeSpeed(0.7).alongWith(RobotContainer.SHOOTER_SUBSYSTEM.revertShooterRun()),
             Commands.waitUntil(() -> getIntakeUpperSensor()),
-            stopIntakeMotors().alongWith(RobotContainer.SHOOTER_SUBSYSTEM.stopShooters())
-        );
+            setIntakeSpeed(-0.25),
+            Commands.waitUntil(() -> !getIntakeUpperSensor()),
+            stopIntakeMotors().alongWith(RobotContainer.SHOOTER_SUBSYSTEM.stopShooters()));
     }
 
     private void stopIntakeMotorsLocal()

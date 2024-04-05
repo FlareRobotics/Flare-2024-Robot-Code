@@ -66,27 +66,29 @@ public class RobotContainer {
         }
 
         private void configureButtonBindings() {
-                m_DriverJoy.rightTrigger()
-                                .whileTrue(new SequentialCommandGroup(new ParallelDeadlineGroup(
-                                                Commands.waitUntil(() -> IntakeSubsystem.getIntakeUpperSensor()),
-                                                Commands.run(() -> setControllerRumbleDriver(0.8))),
-                                                Commands.run(() -> setControllerRumbleDriver(0)),
-                                                generatePathOnFlyCommand(),
-                                                SHOOTER_SUBSYSTEM.shootNote()))
-                                .onFalse(SHOOTER_SUBSYSTEM.stopShooters().alongWith(INTAKE_SUBSYSTEM.stopIntakeMotors()));
+                m_DriverJoy.rightTrigger().whileTrue(new SequentialCommandGroup(new ParallelDeadlineGroup(
+                                Commands.waitUntil(() -> IntakeSubsystem.getIntakeUpperSensor()),
+                                Commands.run(() -> setControllerRumbleDriver(0.8))),
+                                new ParallelCommandGroup(Commands.run(() -> setControllerRumbleOperator(0)),
+                                                generatePathOnFlyCommand().andThen(SHOOTER_SUBSYSTEM.shootNote()))))
+                                .onFalse(INTAKE_SUBSYSTEM.stopIntakeMotors().alongWith(SHOOTER_SUBSYSTEM.stopShooters())
+                                                .alongWith(Commands.run(() -> setControllerRumbleDriver(0))));
 
                 m_DriverJoy.leftTrigger().whileTrue(new SequentialCommandGroup(new ParallelDeadlineGroup(
-                                                Commands.waitUntil(() -> IntakeSubsystem.getIntakeUpperSensor()),
-                                                Commands.run(() -> setControllerRumbleDriver(0.8))),
-                                                Commands.run(() -> setControllerRumbleDriver(0)),
-                                                SHOOTER_SUBSYSTEM.ejectNote()))
-                                        .onFalse(SHOOTER_SUBSYSTEM.stopShooters().alongWith(INTAKE_SUBSYSTEM.stopIntakeMotors()));
+                                Commands.waitUntil(() -> IntakeSubsystem.getIntakeUpperSensor()),
+                                Commands.run(() -> setControllerRumbleDriver(0.8))),
+                                new ParallelCommandGroup(Commands.run(() -> setControllerRumbleOperator(0)),
+                                                SHOOTER_SUBSYSTEM.ejectNote())))
+                                .onFalse(INTAKE_SUBSYSTEM.stopIntakeMotors().alongWith(SHOOTER_SUBSYSTEM.stopShooters())
+                                                .alongWith(Commands.run(() -> setControllerRumbleDriver(0))));
 
                 m_OperatorJoy.x().whileTrue(new SequentialCommandGroup(new ParallelDeadlineGroup(
-                                                Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
-                                                Commands.run(() -> setControllerRumbleOperator(0.8))),
-                                               new ParallelCommandGroup(Commands.run(() -> setControllerRumbleOperator(0)),INTAKE_SUBSYSTEM.grabNote())))
-                                .onFalse(INTAKE_SUBSYSTEM.stopIntakeMotors().alongWith(SHOOTER_SUBSYSTEM.stopShooters()));
+                                Commands.waitUntil(() -> !IntakeSubsystem.getIntakeUpperSensor()),
+                                Commands.run(() -> setControllerRumbleOperator(0.8))),
+                                new ParallelCommandGroup(Commands.run(() -> setControllerRumbleOperator(0)),
+                                                INTAKE_SUBSYSTEM.grabNote())))
+                                .onFalse(INTAKE_SUBSYSTEM.stopIntakeMotors().alongWith(SHOOTER_SUBSYSTEM.stopShooters())
+                                                .alongWith(Commands.run(() -> setControllerRumbleOperator(0))));
 
                 m_OperatorJoy.rightTrigger().whileTrue(CLIMB_SUBSYSTEM.setClimbSpeed(true));
                 m_OperatorJoy.leftTrigger().whileTrue(CLIMB_SUBSYSTEM.setClimbSpeed(false));
