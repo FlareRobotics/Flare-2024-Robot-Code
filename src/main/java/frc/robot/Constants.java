@@ -11,7 +11,6 @@ public final class Constants
     {
         public static int intakeFeederCanID = 7;
         public static int intakeFeederSensorEndID = 0;
-        public static double intakeUpperSensorDistance = 30;
         public static double intakeGroundSpeedPercentage = 1;
         public static double intakeFeederMovingSpeedPercentage = 0.25;
         public static double intakeFeederFeedSpeedPercentage = 1;
@@ -24,7 +23,7 @@ public final class Constants
         public static int shooterCanID = 0;
         public static int shooter2CanID = 1;
         public static int shooterIdleRPM = 0;
-        public static double shooterShootRPM = 4800;
+        public static double shooterShootRPM = 5200;
         public static boolean shooterMotorReversed = false;
         public static NeutralModeValue shooterMotorNeutralMode = NeutralModeValue.Brake;
         public static double shooterMotorKp = 5;
