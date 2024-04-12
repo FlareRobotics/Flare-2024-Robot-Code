@@ -93,6 +93,12 @@ public class RobotContainer {
                                 .onTrue(new InstantCommand(
                                                 () -> IntakeSubsystem.hasNote = true));
 
+                m_OperatorJoy.a().whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0.2), INTAKE_SUBSYSTEM))
+                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
+
+                m_OperatorJoy.b().whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(-0.2), INTAKE_SUBSYSTEM))
+                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
+
                 // Shoot
                 m_DriverJoy.rightBumper()
                                 .whileTrue(generateAutoShooterCommand(ShooterConstants.shooterShootRPM))

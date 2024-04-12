@@ -1,0 +1,83 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 14.231676097611453,
+        "y": 5.551548579949013
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 14.231676097611453,
+        "y": 7.051548579949013
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.247215401838211,
+        "y": 7.4440693233238315
+      },
+      "prevControl": {
+        "x": 9.247215401838211,
+        "y": 7.4440693233238315
+      },
+      "nextControl": {
+        "x": 7.247215401838211,
+        "y": 7.4440693233238315
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 14.231676097611453,
+        "y": 5.551548579949013
+      },
+      "prevControl": {
+        "x": 13.559385553956293,
+        "y": 6.52943113293634
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "GrabNote",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GrabNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.2,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 300.0,
+    "maxAngularAcceleration": 400.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null,
+  "useDefaultConstraints": true
+}

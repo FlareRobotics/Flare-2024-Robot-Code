@@ -32,7 +32,6 @@ public class Robot extends LoggedRobot {
    // Logger.start();
 
     m_robotContainer = new RobotContainer();
-    LimelightHelpers.setPipelineIndex("", 0);
   }
 
   @Override
@@ -87,7 +86,8 @@ public class Robot extends LoggedRobot {
     }
     LimelightHelpers.setLEDMode_ForceOff("");
     IntakeSubsystem.hasNote = true;
-    LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 0 : 2);
+    int[] ids = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    LimelightHelpers.SetFiducialIDFiltersOverride("", ids);
     DriveSubsystem.setBrake(true);
     DriveSubsystem.resetEncoders();
     
@@ -101,7 +101,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
-    LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 1 : 3);
+    int[] ids = {4,7};
+    LimelightHelpers.SetFiducialIDFiltersOverride("", ids);
     DriveSubsystem.setBrake(true);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

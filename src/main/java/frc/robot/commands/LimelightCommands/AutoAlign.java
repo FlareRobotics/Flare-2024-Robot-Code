@@ -34,12 +34,12 @@ public class AutoAlign extends Command {
 
         double horizontalSpeed = subsystem.xPIDController.calculate(
                 LimelightHelpers.getTargetPose3d_RobotSpace("").getX(),
-                (LimelightHelpers.getTargetPose3d_RobotSpace("").getX() > 0 ? ((Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 0.3 : 0.3) : (Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 0.3 : 0.3));
+                0);
         double forwardSpeed = subsystem.yPIDController.calculate(
                 LimelightHelpers.getTargetPose3d_RobotSpace("").getZ(),
-                (LimelightHelpers.getTargetPose3d_RobotSpace("").getX() > 0 ? ((Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 2.54 : 2.54) : (Math.abs(DriveSubsystem.getModAngle()) > 300 && Math.abs(DriveSubsystem.getModAngle()) > 40) ? 2.54 : 2.54));
+                2.3);
 
-        double rotationalSpeed = subsystem.rotPIDController.calculate(LimelightHelpers.getTX(""), -7);
+        double rotationalSpeed = subsystem.rotPIDController.calculate(LimelightHelpers.getTX(""), 0);
 
         forwardSpeed = deSatureSpeeds(forwardSpeed, maxDriveSpeed);
         horizontalSpeed = deSatureSpeeds(horizontalSpeed, maxDriveSpeed);

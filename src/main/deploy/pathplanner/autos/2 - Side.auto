@@ -1,26 +1,20 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 16.1,
+      "y": 2.07
+    },
+    "rotation": 0.0
+  },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FirstShoot"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Oto - Red - 1"
+            "pathName": "Red - Side - 1"
           }
         },
         {
@@ -32,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Oto - Red - 2"
+            "pathName": "Red - Side - 2"
           }
         },
         {
@@ -44,19 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Oto - Red - 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Oto - Red - 4"
+            "pathName": "Red - Side - 3"
           }
         },
         {
@@ -68,6 +50,6 @@
       ]
     }
   },
-  "folder": "Oto Presets",
+  "folder": null,
   "choreoAuto": false
 }

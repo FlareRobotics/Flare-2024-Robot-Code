@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.1,
-        "y": 5.57
+        "x": 15.102013541990049,
+        "y": 1.8763681925512008
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.15,
-        "y": 5.57
+        "x": 15.052013541990048,
+        "y": 1.8763681925512008
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 12.5,
-        "y": 5.57
+        "x": 13.163232368131403,
+        "y": 1.8763681925512008
       },
       "prevControl": {
-        "x": 12.45,
-        "y": 5.57
+        "x": 13.213232368131404,
+        "y": 1.8763681925512008
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 4.2,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 300.0,
     "maxAngularAcceleration": 400.0
   },
@@ -43,10 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Oto Red",
-  "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
-  },
+  "folder": null,
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

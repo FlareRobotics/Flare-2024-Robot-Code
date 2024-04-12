@@ -101,9 +101,9 @@ public class DriveSubsystem extends SubsystemBase {
         this // Reference to this subsystem to set requirements
     );
 
-    xPIDController.setTolerance(0.08);
-    yPIDController.setTolerance(0.08);
-    rotPIDController.setTolerance(3);
+    xPIDController.setTolerance(0.03);
+    yPIDController.setTolerance(0.03);
+    rotPIDController.setTolerance(2);
   }
 
   public static double getModAngle()
