@@ -2,11 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.revrobotics.ColorSensorV3;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,8 +14,7 @@ import frc.robot.RobotState;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_VictorSPX intakeFeederMotor = new WPI_VictorSPX(IntakeConstants.intakeFeederCanID);
-    public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
-    //public static DigitalInput intakeIRSensor = new DigitalInput(IntakeConstants.intakeIRSensorPort);
+    public static DigitalInput intakeIRSensor = new DigitalInput(IntakeConstants.intakeIRSensorPort);
     public static  boolean intakebozuk = false;
     public double lastSeenTime = 0;
 
@@ -38,7 +34,6 @@ public class IntakeSubsystem extends SubsystemBase {
             SmartDashboard.putBoolean("Has Note", hasNote);
             SmartDashboard.putBoolean("Move Note", moveNote);
         }
-        SmartDashboard.putBoolean("BOZUK", intakebozuk);
 
         if (!DriverStation.isEnabled())
             return;
@@ -86,10 +81,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public static boolean getIntakeUpperSensor() {
-        if(!DriverStation.isTeleop()){
-        double detectedColor = intakeSecondSensor.getColor().red;
-        return detectedColor > 0.3;
-        }else return false;
-        //return intakeIRSensor.get();
+        return intakeIRSensor.get();
     }
 }

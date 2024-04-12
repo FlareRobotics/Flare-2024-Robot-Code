@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public final class Constants 
 {
-    public static boolean enableSmartDashboard = false;
+    public static boolean enableSmartDashboard = true;
 
     public static final class IntakeConstants
     {
@@ -17,7 +17,7 @@ public final class Constants
         public static double intakeFeederFeedSpeedPercentage = 1;
         public static boolean intakeFeederReversed = false;
         public static NeutralMode intakeFeederNeutralMode = NeutralMode.Brake;
-        public static int intakeIRSensorPort = 1;
+        public static int intakeIRSensorPort = 0;
     }
 
     public static final class ShooterConstants
@@ -25,13 +25,13 @@ public final class Constants
         public static int shooterCanID = 0;
         public static int shooter2CanID = 1;
         public static int shooterIdleRPM = 0;
-        public static double shooterShootRPM = 4800;
+        public static double shooterShootRPM = 2500;
         public static boolean shooterMotorReversed = false;
         public static NeutralModeValue shooterMotorNeutralMode = NeutralModeValue.Brake;
         public static double shooterMotorKp = 5;
         public static double shooterMotorKi = 2;
         public static double shooterMotorKd = 0;
-        public static double RPMTolerance = 50;
+        public static double RPMTolerance = 100;
     }
 
     public static final class ClimbConstants
