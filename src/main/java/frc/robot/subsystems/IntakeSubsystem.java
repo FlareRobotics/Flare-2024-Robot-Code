@@ -2,20 +2,18 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.RobotContainer;
-import frc.robot.RobotState;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final WPI_VictorSPX intakeFeederMotor = new WPI_VictorSPX(IntakeConstants.intakeFeederCanID);
-    public static final ColorSensorV3 intakeSecondSensor = new ColorSensorV3(I2C.Port.kOnboard);
+    public static final DigitalInput intakeSensor = new DigitalInput(0);
     public double lastSeenTime = 0;
 
     public IntakeSubsystem() {
@@ -23,64 +21,43 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeFeederMotor.setNeutralMode(IntakeConstants.intakeFeederNeutralMode);
     }
 
-    public static boolean hasNote = false;
-    public static boolean moveNote = false;
-    boolean shootingNote = false;
 
     @Override
     public void periodic() {
         if (Constants.enableSmartDashboard) {
             SmartDashboard.putBoolean("Intake Upper Sensor", getIntakeUpperSensor());
-            SmartDashboard.putBoolean("Has Note", hasNote);
-            SmartDashboard.putBoolean("Move Note", moveNote);
-        }
-
-        if (!DriverStation.isEnabled())
-            return;
-
-        if (DriverStation.isAutonomous() && !hasNote && !moveNote) {
-            RobotContainer.m_RobotState = RobotState.Intaking;
-        }
-
-        if (ShooterSubsystem.robotGoalRPM > 0) {
-            return;
-        }
-
-        if (hasNote && !moveNote) {
-            RobotContainer.m_RobotState = RobotState.NoteReady;
-        }
-
-        if (getIntakeUpperSensor()) {
-            if (ShooterSubsystem.robotGoalRPM <= 0) {
-                hasNote = true;
-                moveNote = true;
-                RobotContainer.m_DriverJoy.getHID().setRumble(RumbleType.kBothRumble, 1);
-                RobotContainer.m_RobotState = RobotState.MovingNoteDown;
-            } else if (!moveNote) {
-                shootingNote = true;
-            }
-        } else if (moveNote) {
-            moveNote = false;
-            hasNote = true;
-            RobotContainer.m_DriverJoy.getHID().setRumble(RumbleType.kBothRumble, 0);
-            RobotContainer.m_RobotState = RobotState.NoteReady;
-        } else if (shootingNote) {
-            shootingNote = false;
-            hasNote = false;
-            moveNote = false;
-
-            if (DriverStation.isAutonomous()) {
-                RobotContainer.m_RobotState = RobotState.Idle;
-            }
         }
     }
 
-    public void setIntakeSpeed(double speed) {
+    public Command setIntakeSpeed(double speed)
+    {
+        return Commands.runOnce(() -> setIntakeSpeedLocal(speed));
+    }
+
+    public Command grabNote()
+    {
+        return Commands.sequence(
+            setIntakeSpeed(0.7).alongWith(RobotContainer.SHOOTER_SUBSYSTEM.revertShooterRun()),
+            Commands.waitUntil(() -> getIntakeUpperSensor()),
+            setIntakeSpeed(-0.25),
+            Commands.waitSeconds(0.6),
+            stopIntakeMotors().alongWith(RobotContainer.SHOOTER_SUBSYSTEM.stopShooters()));
+    }
+
+    private void stopIntakeMotorsLocal()
+    {
+        intakeFeederMotor.stopMotor();
+    }
+
+    public Command stopIntakeMotors()
+    {
+        return Commands.runOnce(() -> stopIntakeMotorsLocal());
+    }
+    public void setIntakeSpeedLocal(double speed) {
         intakeFeederMotor.set(VictorSPXControlMode.PercentOutput, speed);
     }
 
     public static boolean getIntakeUpperSensor() {
-        double detectedColor = intakeSecondSensor.getColor().red;
-        return detectedColor > 0.3;
+        return !intakeSensor.get();
     }
 }

@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+
 /*Will not be used??
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -32,7 +35,12 @@ public class ClimbSubsystem extends SubsystemBase{
         climbMotor2.set(VictorSPXControlMode.PercentOutput, 0);
     }
 
-    public void setClimbSpeed(boolean up)
+    public Command setClimbSpeed(boolean up)
+    {
+        return Commands.runOnce(() -> setClimbSpeedLocal(up));
+    }
+
+    public void setClimbSpeedLocal(boolean up)
     {
         climbMotor.set(VictorSPXControlMode.PercentOutput, ClimbConstants.climbSpeedPercentage * (up ? 1 : -1));
         climbMotor2.set(VictorSPXControlMode.PercentOutput, ClimbConstants.climbSpeedPercentage * (up ? 1 : -1));

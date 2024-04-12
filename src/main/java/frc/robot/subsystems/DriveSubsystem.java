@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import org.littletonrobotics.junction.Logger;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -14,15 +13,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.LimelightHelpers;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.SwerveConstants.AutoConstants;
 import frc.robot.SwerveConstants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -68,17 +64,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   public final VisionSubsystem vision = new VisionSubsystem(this);
 
-  // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_drive_odometry = new SwerveDriveOdometry(
-      DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(getHeading()),
-      new SwerveModulePosition[] {
-          m_frontLeft.getPosition(),
-          m_frontRight.getPosition(),
-          m_rearLeft.getPosition(),
-          m_rearRight.getPosition()
-      });
-
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     resetEncoders();
@@ -106,8 +91,7 @@ public class DriveSubsystem extends SubsystemBase {
     rotPIDController.setTolerance(3);
   }
 
-  public static double getModAngle()
-  {
+  public static double getModAngle() {
     return m_gyro.getAngle() % 360;
   }
 
@@ -115,24 +99,11 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     if (Constants.enableSmartDashboard) {
       SmartDashboard.putNumber("Gyro Angle", getModAngle());
-      SmartDashboard.putString("Robot State", RobotContainer.m_RobotState.toString());
     }
-
-    // Update the odometry in the periodic block
-    m_drive_odometry.update(
-        Rotation2d.fromDegrees(getHeading()),
-        new SwerveModulePosition[] {
-            m_frontLeft.getPosition(),
-            m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
-        });
 
     SmartDashboard.putNumber("X Lime", LimelightHelpers.getTargetPose3d_RobotSpace("").getX());
     SmartDashboard.putNumber("Z Lime", LimelightHelpers.getTargetPose3d_RobotSpace("").getZ());
     SmartDashboard.putNumber("TX Lime", LimelightHelpers.getTX(""));
-
-    Logger.recordOutput("Encoder Only Odometry", m_drive_odometry.getPoseMeters());
   }
 
   /**
@@ -141,11 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    return vision.poseEst.getEstimatedPosition();
-  }
-
-  public Pose2d getOdomPose() {
-    return m_drive_odometry.getPoseMeters();
+    return vision.getCurrentPose();
   }
 
   /**
@@ -154,17 +121,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    m_drive_odometry.resetPosition(
-        Rotation2d.fromDegrees(getHeading()),
-        new SwerveModulePosition[] {
-            m_frontLeft.getPosition(),
-            m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
-        },
-        pose);
-
-        vision.setCurrentPose(pose);
+    vision.setCurrentPose(pose);
   }
 
   /**
@@ -192,12 +149,11 @@ public class DriveSubsystem extends SubsystemBase {
       rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
     }
 
-    if(shifterEnabled)
-    {
+    if (shifterEnabled) {
       xSpeedDelivered /= 2;
       ySpeedDelivered /= 2;
     }
-    
+
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,

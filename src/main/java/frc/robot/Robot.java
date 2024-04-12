@@ -7,15 +7,12 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.math.LimelightHelpers;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
@@ -32,21 +29,14 @@ public class Robot extends LoggedRobot {
     Logger.start();
 
     m_robotContainer = new RobotContainer();
-    LimelightHelpers.setPipelineIndex("", 0);
+    int[] validIDs = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    LimelightHelpers.SetFiducialIDFiltersOverride("", validIDs);
   }
 
   @Override
   public void disabledInit() {
-    ShooterSubsystem.robotGoalRPM = 0;
-    RobotContainer.m_RobotState = RobotState.Idle;
     DriveSubsystem.setBrake(false);
     DriveSubsystem.setWheelsZeroPos();
-  }
-
-  @Override
-  public void autonomousExit() {
-    ShooterSubsystem.robotGoalRPM = 0;
-    RobotContainer.m_RobotState = RobotState.Idle;
   }
 
   @Override
@@ -81,8 +71,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     LimelightHelpers.setLEDMode_ForceOff("");
-    IntakeSubsystem.hasNote = true;
-    LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 0 : 2);
     DriveSubsystem.setBrake(true);
     DriveSubsystem.resetEncoders();
     DriveSubsystem.zeroHeading();
@@ -96,7 +84,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
-    LimelightHelpers.setPipelineIndex("", DriverStation.getAlliance().get() == Alliance.Red ? 1 : 3);
+    int[] validIDs = {7,4};
+    LimelightHelpers.SetFiducialIDFiltersOverride("", validIDs);
     DriveSubsystem.setBrake(true);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
