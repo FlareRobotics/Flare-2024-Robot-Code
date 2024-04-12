@@ -52,7 +52,6 @@ public class VisionSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("TX Lime", LimelightHelpers.getTX(""));
 
     PoseEstimate blueRightBotPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
-    blueRightBotPose.pose = new Pose2d(blueRightBotPose.pose.getTranslation(), Rotation2d.fromDegrees(swerve.getHeading()));
 
     if (Math.abs(DriveSubsystem.m_gyro.getRate()) > 720)
       return;

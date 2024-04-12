@@ -42,10 +42,10 @@ public class IntakeSubsystem extends SubsystemBase {
         if (!DriverStation.isEnabled())
             return;
 
-        if (DriverStation.isAutonomous() && !hasNote && !moveNote) {
-            RobotContainer.m_RobotState = RobotState.Intaking;
-            RobotContainer.m_intaking = true;
-        }
+        // if (DriverStation.isAutonomous() && !hasNote && !moveNote) {
+        //     RobotContainer.m_RobotState = RobotState.Intaking;
+        //     RobotContainer.m_intaking = true;
+        // }
 
         if (ShooterSubsystem.robotGoalRPM > 0) {
             return;
@@ -95,6 +95,7 @@ public class IntakeSubsystem extends SubsystemBase {
         RobotContainer.m_DriverJoy.getHID().setRumble(RumbleType.kBothRumble, 0);
         RobotContainer.m_RobotState = RobotState.NoteReady;
         RobotContainer.SHOOTER_SUBSYSTEM.setShooterRPM(0);
+        RobotContainer.m_intaking = false;
     }
 
     public void setIntakeSpeed(double speed) {

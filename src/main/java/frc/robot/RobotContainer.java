@@ -46,6 +46,8 @@ public class RobotContainer {
         public RobotContainer() {
                 NamedCommands.registerCommand("AutoShoot", generateAutonomousShooterCommand());
 
+                NamedCommands.registerCommand("GrabNote", generateAutoIntakeCommand());
+
                 NamedCommands.registerCommand("Eject", generateAutoShooterCommand(800));
 
                 NamedCommands.registerCommand("FirstShoot",
@@ -168,7 +170,7 @@ public class RobotContainer {
                 return new ParallelCommandGroup(
                                 new InstantCommand(() -> m_intaking = false),
                                 new ShootCommand(SHOOTER_SUBSYSTEM),
-                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(0.9)
+                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(1)
                                 .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
         }
 
