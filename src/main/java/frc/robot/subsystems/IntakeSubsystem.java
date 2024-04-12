@@ -75,7 +75,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     private Command firstCommand() {
-        return new SequentialCommandGroup(new WaitCommand(0.25), new InstantCommand(() -> firstVoid()));
+        return new SequentialCommandGroup(new WaitCommand(0.4), new InstantCommand(() -> firstVoid()));
     }
 
     private void firstVoid() {
