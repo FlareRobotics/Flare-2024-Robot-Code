@@ -106,8 +106,8 @@ public class ShooterSubsystem extends SubsystemBase {
         }
 
         if (RPM == 0) {
-            shooterMotor.set(0);
-            shooterMotor2.set(0);
+            shooterMotor.stopMotor();
+            shooterMotor2.stopMotor();
             return;
         }
 
@@ -120,6 +120,6 @@ public class ShooterSubsystem extends SubsystemBase {
             return false;
 
         return Math
-                .abs((goalRPM - shooterMotor.getVelocity().getValueAsDouble() * 60)) <= ShooterConstants.RPMTolerance;
+                .abs((goalRPM - shooterMotor.getVelocity().getValueAsDouble() * 60)) <= ShooterConstants.RPMTolerance || (shooterMotor.getVelocity().getValueAsDouble() * 60) > robotGoalRPM;
     }
 }

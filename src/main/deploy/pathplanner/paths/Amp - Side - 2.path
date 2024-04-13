@@ -3,59 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.808298408263484,
-        "y": 3.427369377886904
+        "x": 14.359891544319463,
+        "y": 6.581490138729208
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.720719973847356,
-        "y": -0.062234828173359985
+        "x": 14.309891544319463,
+        "y": 6.581490138729208
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.307728083048758,
-        "y": 2.4259706112004826
+        "x": 13.54013298611476,
+        "y": 7.0850561101978125
       },
       "prevControl": {
-        "x": 8.357728083048759,
-        "y": 2.4259706112004826
+        "x": 13.59013298611476,
+        "y": 7.0850561101978125
       },
       "nextControl": {
-        "x": 8.257728083048757,
-        "y": 2.4259706112004826
+        "x": 13.490132986114759,
+        "y": 7.0850561101978125
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.003987554337447,
-        "y": 3.583515983009141
+        "x": 14.359891544319463,
+        "y": 6.581490138729208
       },
       "prevControl": {
-        "x": 10.449205759588672,
-        "y": 0.1721210028117739
+        "x": 14.319600297110354,
+        "y": 6.61109783026932
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": -57.90385979917459,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "GrabNote",
-      "waypointRelativePos": 0.45,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -79,13 +73,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 56.0,
+    "rotation": -36.31,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Stage Side",
+  "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 56.0,
+    "rotation": -36.31,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 16.09,
+      "y": 7.0
+    },
+    "rotation": 0.0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red - Origin - 1"
+            "pathName": "Amp - Side - 1"
           }
         },
         {
@@ -20,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red - Origin - 2"
+            "pathName": "Amp - Side - 2"
           }
         },
         {
@@ -32,19 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red - Origin - 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Red - Origin - 4"
+            "pathName": "Amp - Side - 3"
           }
         },
         {
@@ -56,6 +50,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Oto Presets",
   "choreoAuto": false
 }

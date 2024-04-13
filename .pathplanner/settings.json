@@ -3,14 +3,16 @@
   "robotLength": 0.78,
   "holonomicMode": true,
   "pathFolders": [
-    "New - Oto - Red",
-    "Oto Red"
+    "4 Note",
+    "Amp Side",
+    "Mobility",
+    "Stage Side"
   ],
   "autoFolders": [
     "Oto Presets"
   ],
-  "defaultMaxVel": 1.0,
-  "defaultMaxAccel": 0.5,
+  "defaultMaxVel": 1.5,
+  "defaultMaxAccel": 1.0,
   "defaultMaxAngVel": 300.0,
   "defaultMaxAngAccel": 400.0,
   "maxModuleSpeed": 4.8
