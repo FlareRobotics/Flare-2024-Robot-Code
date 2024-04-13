@@ -64,7 +64,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 setShooterRPM(ShooterConstants.shooterShootRPM);
             }
         } else if (shooterInitialize) {
-            setShooterRPM(ShooterConstants.shooterShootRPM);
+            setShooterRPM(ShooterConstants.shooterShootRPM / 1.5);
         } else {
             setShooterRPM(robotGoalRPM);
         }

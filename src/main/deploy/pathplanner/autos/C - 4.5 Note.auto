@@ -52,18 +52,6 @@
           "data": {
             "name": "AutoShoot"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Red - Origin - 5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
         }
       ]
     }

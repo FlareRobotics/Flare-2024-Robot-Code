@@ -4,6 +4,7 @@ import org.littletonrobotics.junction.Logger;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -12,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -25,6 +27,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.SwerveConstants.AutoConstants;
 import frc.robot.SwerveConstants.DriveConstants;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -91,7 +94,7 @@ public class DriveSubsystem extends SubsystemBase {
         this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(AutoConstants.pathDrivekP, 0.0, 0.0), // Translation PID constants
+            new PIDConstants(AutoConstants.pathDrivekP, 0.001, 0.0), // Translation PID constants
             new PIDConstants(AutoConstants.pathTurnkP, 0.001, 0.0), // Rotation PID constants
             4.8, // Max module speed, in m/s
             .415, // Drive base radius in meters. Distance from robot center to furthest module.
@@ -103,7 +106,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     xPIDController.setTolerance(0.03);
     yPIDController.setTolerance(0.03);
-    rotPIDController.setTolerance(2);
+    rotPIDController.setTolerance(3);
   }
 
   public static double getModAngle()
@@ -146,6 +149,16 @@ public class DriveSubsystem extends SubsystemBase {
 
   public Pose2d getOdomPose() {
     return m_drive_odometry.getPoseMeters();
+  }
+
+  public Command returnPathfindRight()
+  {
+    return AutoBuilder.pathfindToPose(new Pose2d(new Translation2d(14.65, 4.00), Rotation2d.fromDegrees(38.0)), new PathConstraints(1, 1, 300, 400));
+  }
+
+    public Command returnPathfindLeft()
+  {
+    return AutoBuilder.pathfindToPose(new Pose2d(new Translation2d(14.51, 6.78), Rotation2d.fromDegrees(324.42)), new PathConstraints(1, 1, 300, 400));
   }
 
   /**

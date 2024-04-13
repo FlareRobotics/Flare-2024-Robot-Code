@@ -87,7 +87,10 @@ public class RobotContainer {
         private void configureButtonBindings() {
                 // Auto Align Then Shoot
                 m_DriverJoy.rightTrigger()
-                                .whileTrue(new ParallelCommandGroup(new InstantCommand(() -> SHOOTER_SUBSYSTEM.shooterInitialize = true),generatePathOnFlyCommand()).andThen(generateAutoShooterCommand(ShooterConstants.shooterShootRPM)))
+                                .whileTrue(new ParallelCommandGroup(
+                                                new InstantCommand(() -> SHOOTER_SUBSYSTEM.shooterInitialize = true),
+                                                generatePathOnFlyCommand())
+                                                .andThen(generateAutoShooterCommand(ShooterConstants.shooterShootRPM)))
                                 .onFalse(new InstantCommand(
                                                 () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
                                                 .andThen(new InstantCommand(
@@ -95,14 +98,40 @@ public class RobotContainer {
                                 .onTrue(new InstantCommand(
                                                 () -> IntakeSubsystem.hasNote = true));
 
-                m_OperatorJoy.a().whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0.2), INTAKE_SUBSYSTEM))
-                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
+                m_OperatorJoy.a()
+                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0.2), INTAKE_SUBSYSTEM))
+                                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
 
-                m_OperatorJoy.b().whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(-0.2), INTAKE_SUBSYSTEM))
-                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
+                m_OperatorJoy.b()
+                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(-0.2),
+                                                INTAKE_SUBSYSTEM))
+                                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
 
                 // Shoot
+                m_DriverJoy.leftBumper()
+                                .whileTrue(DRIVE_SUBSYSTEM.returnPathfindRight())
+                                .onFalse(new InstantCommand(
+                                                () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
+                                                .alongWith(new InstantCommand(
+                                                                () -> IntakeSubsystem.hasNote = false))
+                                                .alongWith(new InstantCommand(() -> DRIVE_SUBSYSTEM.drive(0, 0, 0,
+                                                                false, false, false))))
+                                .onTrue(new InstantCommand(
+                                                () -> IntakeSubsystem.hasNote = true));
+
                 m_DriverJoy.rightBumper()
+                                .whileTrue(DRIVE_SUBSYSTEM.returnPathfindLeft())
+                                .onFalse(new InstantCommand(
+                                                () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
+                                                .alongWith(new InstantCommand(
+                                                                () -> IntakeSubsystem.hasNote = false))
+                                                .alongWith(new InstantCommand(() -> DRIVE_SUBSYSTEM.drive(0, 0, 0,
+                                                                false, false, false))))
+                                .onTrue(new InstantCommand(
+                                                () -> IntakeSubsystem.hasNote = true));
+
+                // Shoot
+                m_DriverJoy.leftTrigger()
                                 .whileTrue(generateAutoShooterCommand(ShooterConstants.shooterShootRPM))
                                 .onFalse(new InstantCommand(
                                                 () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
@@ -112,7 +141,7 @@ public class RobotContainer {
                                                 () -> IntakeSubsystem.hasNote = true));
 
                 // Eject
-                m_DriverJoy.leftTrigger()
+                m_OperatorJoy.leftTrigger()
                                 .whileTrue(generateAutoShooterCommand(800))
                                 .onFalse(new InstantCommand(
                                                 () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
@@ -127,7 +156,6 @@ public class RobotContainer {
 
                 m_OperatorJoy.x().onTrue(new InstantCommand(() -> m_intaking = true));
                 m_OperatorJoy.x().whileFalse(new InstantCommand(() -> m_intaking = false));
-                
 
                 // Emergency Feed
                 m_OperatorJoy.a().whileTrue(new FeedCommand(INTAKE_SUBSYSTEM, false, false));
@@ -136,11 +164,13 @@ public class RobotContainer {
                 m_OperatorJoy.leftBumper().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, false));
                 m_OperatorJoy.rightTrigger().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, true));
 
-                //Zero Heading
+                // Zero Heading
                 m_OperatorJoy.rightBumper().onTrue(new InstantCommand(() -> DriveSubsystem.zeroHeading(false)));
 
-                //m_OperatorJoy.y().onTrue(new InstantCommand(() -> IntakeSubsystem.intakebozuk = true));
-                //m_OperatorJoy.y().whileFalse(new InstantCommand(() -> IntakeSubsystem.intakebozuk = false));
+                // m_OperatorJoy.y().onTrue(new InstantCommand(() -> IntakeSubsystem.intakebozuk
+                // = true));
+                // m_OperatorJoy.y().whileFalse(new InstantCommand(() ->
+                // IntakeSubsystem.intakebozuk = false));
 
         }
 
@@ -160,7 +190,7 @@ public class RobotContainer {
                 return new SequentialCommandGroup(new InstantCommand(
                                 () -> ShooterSubsystem.robotGoalRPM = shooterRPM),
                                 new InstantCommand(
-                                () -> SHOOTER_SUBSYSTEM.shooterInitialize = false),
+                                                () -> SHOOTER_SUBSYSTEM.shooterInitialize = false),
                                 new WaitUntilCommand(() -> m_RobotState == RobotState.Idle),
                                 new InstantCommand(() -> setControllerRumbleDriver(0.8)).withTimeout(0.5)
                                                 .andThen(new InstantCommand(() -> setControllerRumbleDriver(0))));
@@ -170,7 +200,7 @@ public class RobotContainer {
                 return new ParallelCommandGroup(
                                 new InstantCommand(() -> m_intaking = false),
                                 new ShootCommand(SHOOTER_SUBSYSTEM),
-                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(1)
+                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(1.5)
                                 .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
         }
 
@@ -178,7 +208,7 @@ public class RobotContainer {
                 return new CustomCommandRunner(
                                 new SequentialCommandGroup(new InstantCommand(() -> m_RobotState = RobotState.Intaking),
                                                 new InstantCommand(() -> m_intaking = true),
-                                             new InstantCommand(() -> setControllerRumbleOperator(0.8)),
+                                                new InstantCommand(() -> setControllerRumbleOperator(0.8)),
                                                 new WaitUntilCommand(() -> m_RobotState != RobotState.Intaking),
                                                 new InstantCommand(() -> setControllerRumbleOperator(0)))
                                                 .onlyIf(() -> !IntakeSubsystem.hasNote),
@@ -190,7 +220,7 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
-        
+
                 return auto_Chooser.getSelected();
         }
 }

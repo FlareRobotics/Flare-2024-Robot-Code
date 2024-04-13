@@ -109,7 +109,7 @@ public final class SwerveConstants {
   }
 
   public static final class AutoConstants {
-    public static final double pathDrivekP = 3;
-    public static final double pathTurnkP = 0.95;
+    public static final double pathDrivekP = 5;
+    public static final double pathTurnkP = 2;
   }
 }
