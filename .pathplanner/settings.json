@@ -6,13 +6,14 @@
     "4 Note",
     "Amp Side",
     "Mobility",
+    "Middle Backup",
     "Stage Side"
   ],
   "autoFolders": [
     "Oto Presets"
   ],
-  "defaultMaxVel": 1.5,
-  "defaultMaxAccel": 1.0,
+  "defaultMaxVel": 3.5,
+  "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 300.0,
   "defaultMaxAngAccel": 400.0,
   "maxModuleSpeed": 4.8

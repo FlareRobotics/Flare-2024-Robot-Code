@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.181676097611453,
-        "y": 5.551548579949013
+        "x": 10.975459782588608,
+        "y": 4.859997166499325
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.549527747203642,
-        "y": 5.551548579949013
+        "x": 8.293678213604645,
+        "y": 4.133925300660873
       },
       "prevControl": {
-        "x": 13.599527747203643,
-        "y": 5.551548579949013
+        "x": 10.143990387838125,
+        "y": 2.63493822280084
       },
       "nextControl": {
-        "x": 13.499527747203642,
-        "y": 5.551548579949013
+        "x": 8.074911283904537,
+        "y": 4.311154205734377
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 10.846640580585012,
+        "y": 4.133925300660873
+      },
+      "prevControl": {
+        "x": 9.839763760526145,
+        "y": 3.472263390336476
+      },
+      "nextControl": {
+        "x": 11.256519859687364,
+        "y": 4.403274541213847
       },
       "isLocked": false,
       "linkedName": null
@@ -36,20 +52,26 @@
         "y": 5.551548579949013
       },
       "prevControl": {
-        "x": 14.206978086080515,
-        "y": 5.551548579949013
+        "x": 12.743796101001617,
+        "y": 5.04737055123183
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": -54.737997643965855,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "GrabNote",
-      "waypointRelativePos": 0.3,
+      "waypointRelativePos": 0.44999999999999996,
       "command": {
         "type": "parallel",
         "data": {
@@ -73,11 +95,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -0.023966017861676674,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4 Note",
+  "folder": "Middle Backup",
   "previewStartingState": null,
   "useDefaultConstraints": true
 }

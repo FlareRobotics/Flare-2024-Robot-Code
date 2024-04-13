@@ -3,28 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.231676097611453,
+        "x": 15.22885857345789,
         "y": 5.551548579949013
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.181676097611453,
-        "y": 5.551548579949013
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 13.549527747203642,
-        "y": 5.551548579949013
-      },
-      "prevControl": {
-        "x": 13.599527747203643,
-        "y": 5.551548579949013
-      },
-      "nextControl": {
-        "x": 13.499527747203642,
+        "x": 15.17885857345789,
         "y": 5.551548579949013
       },
       "isLocked": false,
@@ -36,7 +20,7 @@
         "y": 5.551548579949013
       },
       "prevControl": {
-        "x": 14.206978086080515,
+        "x": 14.281676097611454,
         "y": 5.551548579949013
       },
       "nextControl": null,
@@ -46,25 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "GrabNote",
-      "waypointRelativePos": 0.3,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "GrabNote"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 4.0,
@@ -77,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4 Note",
+  "folder": "Middle Backup",
   "previewStartingState": null,
   "useDefaultConstraints": true
 }
