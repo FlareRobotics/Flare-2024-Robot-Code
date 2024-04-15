@@ -38,10 +38,10 @@ public final class SwerveConstants {
     public static final int kFrontRightDrivingCanId = 4;
     public static final int kRearRightDrivingCanId = 3;
 
-    public static final int kFrontLeftTurningCanId = 19;
-    public static final int kRearLeftTurningCanId = 14;
-    public static final int kFrontRightTurningCanId = 13;
-    public static final int kRearRightTurningCanId = 18;
+    public static final int kFrontLeftTurningCanId = 18;
+    public static final int kRearLeftTurningCanId = 19;
+    public static final int kFrontRightTurningCanId = 14;
+    public static final int kRearRightTurningCanId = 13;
 
     public static final int gyroCanId = 7;
     public static final boolean kGyroReversed = false;
