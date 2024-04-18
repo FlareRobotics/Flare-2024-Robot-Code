@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -59,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
             return;
 
         if ((DriverStation.isAutonomousEnabled() && IntakeSubsystem.hasNote && !IntakeSubsystem.moveNote)) {
-            if (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("I")
+            if (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("T")
                     && !RobotContainer.auto_Chooser.getSelected().getName().startsWith("M")) {
                 setShooterRPM(ShooterConstants.shooterShootRPM);
             }
@@ -67,6 +68,15 @@ public class ShooterSubsystem extends SubsystemBase {
             setShooterRPM(ShooterConstants.shooterShootRPM / 1.5);
         } else {
             setShooterRPM(robotGoalRPM);
+        }
+
+        if(getRPMReached(ShooterConstants.shooterShootRPM))
+        {
+            RobotContainer.m_OperatorJoy.getHID().setRumble(RumbleType.kBothRumble, 0.8);
+        }
+        else
+        {
+            RobotContainer.m_OperatorJoy.getHID().setRumble(RumbleType.kBothRumble, 0);
         }
 
         if (RobotContainer.m_RobotState == RobotState.ShooterReady && robotGoalRPM <= 0)

@@ -44,18 +44,11 @@ public class RobotContainer {
         boolean driverModeEnabled = false;
 
         public RobotContainer() {
-                NamedCommands.registerCommand("AutoShoot", generateAutonomousShooterCommand());
+                // NamedCommands.registerCommand("AutoShoot", generateAutonomousShooterCommand());
 
-                NamedCommands.registerCommand("GrabNote", generateAutoIntakeCommand());
+                // NamedCommands.registerCommand("GrabNote", generateAutoIntakeCommand());
 
-                NamedCommands.registerCommand("Eject", generateAutoShooterCommand(800));
-
-                NamedCommands.registerCommand("FirstShoot",
-                                new ParallelCommandGroup(
-                                                new ShootCommand(SHOOTER_SUBSYSTEM),
-                                                new FeedCommand(INTAKE_SUBSYSTEM, true, false)).withTimeout(1.5)
-                                                .andThen(new InstantCommand(() -> IntakeSubsystem.hasNote = false)));
-
+                // INTAKE_SUBSYSTEM.setDefaultCommand(new AutoIntake(INTAKE_SUBSYSTEM));
                 auto_Chooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData(auto_Chooser);
 
@@ -80,58 +73,26 @@ public class RobotContainer {
                                                                                                                 / 2.00d,
                                                                                                 true, true, true),
                                                                 DRIVE_SUBSYSTEM));
-
-                INTAKE_SUBSYSTEM.setDefaultCommand(new AutoIntake(INTAKE_SUBSYSTEM));
         }
 
         private void configureButtonBindings() {
-                // Auto Align Then Shoot
-                m_DriverJoy.rightTrigger()
-                                .whileTrue(new ParallelCommandGroup(
-                                                new InstantCommand(() -> SHOOTER_SUBSYSTEM.shooterInitialize = true),
-                                                generatePathOnFlyCommand())
-                                                .andThen(generateAutoShooterCommand(ShooterConstants.shooterShootRPM)))
-                                .onFalse(new InstantCommand(
-                                                () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
-                                                .andThen(new InstantCommand(
-                                                                () -> IntakeSubsystem.hasNote = false)))
-                                .onTrue(new InstantCommand(
-                                                () -> IntakeSubsystem.hasNote = true));
-
                 m_OperatorJoy.a()
-                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0.2), INTAKE_SUBSYSTEM))
+                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0.8), INTAKE_SUBSYSTEM)
+                                                .alongWith(new InstantCommand(() -> m_intaking = true)))
+                                .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM)
+                                                .alongWith(new InstantCommand(() -> m_intaking = false)));
+
+                m_OperatorJoy.x()
+                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(1), INTAKE_SUBSYSTEM))
                                 .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
 
                 m_OperatorJoy.b()
-                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(-0.2),
+                                .whileTrue(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(-0.3169),
                                                 INTAKE_SUBSYSTEM))
                                 .onFalse(new RunCommand(() -> INTAKE_SUBSYSTEM.setIntakeSpeed(0), INTAKE_SUBSYSTEM));
 
                 // Shoot
-                m_DriverJoy.leftBumper()
-                                .whileTrue(DRIVE_SUBSYSTEM.returnPathfindRight())
-                                .onFalse(new InstantCommand(
-                                                () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
-                                                .alongWith(new InstantCommand(
-                                                                () -> IntakeSubsystem.hasNote = false))
-                                                .alongWith(new InstantCommand(() -> DRIVE_SUBSYSTEM.drive(0, 0, 0,
-                                                                false, false, false))))
-                                .onTrue(new InstantCommand(
-                                                () -> IntakeSubsystem.hasNote = true));
-
-                m_DriverJoy.rightBumper()
-                                .whileTrue(DRIVE_SUBSYSTEM.returnPathfindLeft())
-                                .onFalse(new InstantCommand(
-                                                () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
-                                                .alongWith(new InstantCommand(
-                                                                () -> IntakeSubsystem.hasNote = false))
-                                                .alongWith(new InstantCommand(() -> DRIVE_SUBSYSTEM.drive(0, 0, 0,
-                                                                false, false, false))))
-                                .onTrue(new InstantCommand(
-                                                () -> IntakeSubsystem.hasNote = true));
-
-                // Shoot
-                m_DriverJoy.leftTrigger()
+                m_DriverJoy.rightTrigger()
                                 .whileTrue(generateAutoShooterCommand(ShooterConstants.shooterShootRPM))
                                 .onFalse(new InstantCommand(
                                                 () -> ShooterSubsystem.robotGoalRPM = ShooterConstants.shooterIdleRPM)
@@ -139,6 +100,9 @@ public class RobotContainer {
                                                                 () -> IntakeSubsystem.hasNote = false)))
                                 .onTrue(new InstantCommand(
                                                 () -> IntakeSubsystem.hasNote = true));
+
+                m_DriverJoy.leftTrigger().whileTrue(new AutoAlign(DRIVE_SUBSYSTEM, 0.175))
+                .onFalse(new InstantCommand(() -> DRIVE_SUBSYSTEM.drive(0,0,0,false,false,true)));
 
                 // Eject
                 m_OperatorJoy.leftTrigger()
@@ -149,16 +113,6 @@ public class RobotContainer {
                                                                 () -> IntakeSubsystem.hasNote = false)))
                                 .onTrue(new InstantCommand(
                                                 () -> IntakeSubsystem.hasNote = true));
-
-                // Toggle Intake
-                m_OperatorJoy.x().whileTrue(generateAutoIntakeCommand())
-                                .onTrue(new InstantCommand(() -> IntakeSubsystem.hasNote = false));
-
-                m_OperatorJoy.x().onTrue(new InstantCommand(() -> m_intaking = true));
-                m_OperatorJoy.x().whileFalse(new InstantCommand(() -> m_intaking = false));
-
-                // Emergency Feed
-                m_OperatorJoy.a().whileTrue(new FeedCommand(INTAKE_SUBSYSTEM, false, false));
 
                 // Manual Climb
                 m_OperatorJoy.leftBumper().whileTrue(new ManualClimbCommand(CLIMB_SUBSYSTEM, false));
@@ -180,10 +134,6 @@ public class RobotContainer {
 
         private void setControllerRumbleDriver(double rumble) {
                 m_DriverJoy.getHID().setRumble(RumbleType.kBothRumble, rumble);
-        }
-
-        private Command generatePathOnFlyCommand() {
-                return new AutoAlign(DRIVE_SUBSYSTEM, 0.175);
         }
 
         private Command generateAutoShooterCommand(double shooterRPM) {
@@ -221,6 +171,8 @@ public class RobotContainer {
 
         public Command getAutonomousCommand() {
 
-                return auto_Chooser.getSelected();
+                if (auto_Chooser.getSelected().getName().startsWith("N"))
+                        return null;
+                return new RunCommand(() -> DRIVE_SUBSYSTEM.drive(0.3, 0, 0, true, false, true), DRIVE_SUBSYSTEM);
         }
 }

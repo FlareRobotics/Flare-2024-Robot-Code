@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -36,10 +37,10 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public void periodic() {
-    LimelightHelpers.SetRobotOrientation("", swerve.getHeading(), 0, 0, 0, 0, 0);
+    LimelightHelpers.SetRobotOrientation("", swerve.getHeading() + (DriverStation.getAlliance().get() == Alliance.Blue ? 180 : 0), 0, 0, 0, 0, 0);
     field2d.setRobotPose(getCurrentPose());
 
-    poseEst.update(Rotation2d.fromDegrees(swerve.getHeading()), new SwerveModulePosition[] {
+    poseEst.update(Rotation2d.fromDegrees(-swerve.getHeading()), new SwerveModulePosition[] {
         DriveSubsystem.m_frontLeft.getPosition(),
         DriveSubsystem.m_frontRight.getPosition(),
         DriveSubsystem.m_rearLeft.getPosition(),
@@ -56,13 +57,13 @@ public class VisionSubsystem extends SubsystemBase {
     if (Math.abs(DriveSubsystem.m_gyro.getRate()) > 720)
       return;
 
-    if (blueRightBotPose.rawFiducials.length > 0
-        && (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("M") || !DriverStation.isAutonomous())) {
-      if (getAvgTA(blueRightBotPose.rawFiducials) > 0.0025) {
-        poseEst.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, 9999999));
-        poseEst.addVisionMeasurement(blueRightBotPose.pose, blueRightBotPose.timestampSeconds);
-      }
-    }
+    // if (blueRightBotPose.rawFiducials.length > 0
+    //     && (!RobotContainer.auto_Chooser.getSelected().getName().startsWith("M") || !DriverStation.isAutonomous())) {
+    //   if (getAvgTA(blueRightBotPose.rawFiducials) > 0.0025) {
+    //     poseEst.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, 9999999));
+    //     poseEst.addVisionMeasurement(blueRightBotPose.pose, blueRightBotPose.timestampSeconds);
+    //   }
+    // }
   }
 
   public Pose2d getCurrentPose() {

@@ -45,7 +45,7 @@ public class AutoAlign extends Command {
         horizontalSpeed = deSatureSpeeds(horizontalSpeed, maxDriveSpeed);
         rotationalSpeed = deSatureSpeeds(rotationalSpeed, maxDriveSpeed / 1.5);
 
-        subsystem.drive(forwardSpeed, -horizontalSpeed, 0, true, false, true);
+        subsystem.drive(forwardSpeed, -horizontalSpeed, -rotationalSpeed, true, false, true);
 
         if (subsystem.xPIDController.atSetpoint() && subsystem.yPIDController.atSetpoint()) {
             isFinished = true;

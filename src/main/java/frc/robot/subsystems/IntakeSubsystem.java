@@ -42,10 +42,10 @@ public class IntakeSubsystem extends SubsystemBase {
         if (!DriverStation.isEnabled())
             return;
 
-        // if (DriverStation.isAutonomous() && !hasNote && !moveNote) {
-        //     RobotContainer.m_RobotState = RobotState.Intaking;
-        //     RobotContainer.m_intaking = true;
-        // }
+        if (DriverStation.isAutonomous() && !hasNote && !moveNote) {
+             RobotContainer.m_RobotState = RobotState.Intaking;
+             RobotContainer.m_intaking = true;
+         }
 
         if (ShooterSubsystem.robotGoalRPM > 0) {
             return;

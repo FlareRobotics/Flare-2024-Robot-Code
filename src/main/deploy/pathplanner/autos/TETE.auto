@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 16.1,
-      "y": 2.07
+      "x": 15.25,
+      "y": 5.5
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red - Side - 1"
+            "pathName": "Test"
           }
         },
         {
@@ -22,16 +22,10 @@
           "data": {
             "name": "AutoShoot"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Red - Side - 2"
-          }
         }
       ]
     }
   },
-  "folder": "Oto Presets",
+  "folder": null,
   "choreoAuto": false
 }

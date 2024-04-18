@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 15.23,
+      "y": 5.55
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -32,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red - Origin - 3"
+            "pathName": "Red - Origin - 4"
           }
         },
         {
@@ -44,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red - Origin - 4"
+            "pathName": "Middle - Backup - 3"
           }
         },
         {

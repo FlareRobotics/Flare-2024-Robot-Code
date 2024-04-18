@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.51,
-        "y": 6.581490138729208
+        "x": 14.38,
+        "y": 6.86
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.459999999999999,
-        "y": 6.581490138729208
+        "x": 14.33,
+        "y": 6.86
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.54013298611476,
-        "y": 7.0850561101978125
+        "x": 13.575265495752104,
+        "y": 7.014791090923124
       },
       "prevControl": {
-        "x": 13.59013298611476,
-        "y": 7.0850561101978125
+        "x": 14.231072342315867,
+        "y": 6.440960100179829
       },
       "nextControl": {
-        "x": 13.490132986114759,
-        "y": 7.0850561101978125
+        "x": 13.506431401509134,
+        "y": 7.075020923385722
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.51,
-        "y": 6.581490138729208
+        "x": 14.38,
+        "y": 6.86
       },
       "prevControl": {
-        "x": 14.469708752790888,
-        "y": 6.61109783026932
+        "x": 13.425566821518808,
+        "y": 7.293300952193917
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
   "eventMarkers": [
     {
       "name": "GrabNote",
-      "waypointRelativePos": 0.3,
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "parallel",
         "data": {
@@ -66,8 +66,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 300.0,
     "maxAngularAcceleration": 400.0
   },

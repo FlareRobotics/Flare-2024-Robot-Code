@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.804903333059162,
-        "y": 3.325877579001948
+        "x": 15.24991512179886,
+        "y": 5.5040931765173085
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.329337928290693,
-        "y": 2.2367697802442676
+        "x": 15.19991512179886,
+        "y": 5.5040931765173085
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.851219474193204,
-        "y": 2.611516549714048
+        "x": 14.816614169604943,
+        "y": 5.5
       },
       "prevControl": {
-        "x": 8.375654069424733,
-        "y": 0.23421673092040118
+        "x": 14.866614169604944,
+        "y": 5.5
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "GrabNote",
+      "waypointRelativePos": 0.25,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "GrabNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -39,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 40.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Stage Side",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 56.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

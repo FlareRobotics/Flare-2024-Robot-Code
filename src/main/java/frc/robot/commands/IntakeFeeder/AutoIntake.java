@@ -1,5 +1,6 @@
 package frc.robot.commands.IntakeFeeder;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
@@ -21,20 +22,15 @@ public class AutoIntake extends Command {
 
     @Override
     public void execute() {
-        if(RobotContainer.m_RobotState == RobotState.Intaking)
-        {
+        if (!DriverStation.isAutonomousEnabled())
+            return;
+        if (RobotContainer.m_RobotState == RobotState.Intaking) {
             intakeFeederSubsystem.setIntakeSpeed(IntakeConstants.intakeGroundSpeedPercentage);
-        }
-        else if(RobotContainer.m_RobotState == RobotState.MovingNoteDown)
-        {
+        } else if (RobotContainer.m_RobotState == RobotState.MovingNoteDown) {
             intakeFeederSubsystem.setIntakeSpeed(-IntakeConstants.intakeFeederMovingSpeedPercentage);
-        }
-        else if(RobotContainer.m_RobotState == RobotState.ShooterReady)
-        {
+        } else if (RobotContainer.m_RobotState == RobotState.ShooterReady) {
             intakeFeederSubsystem.setIntakeSpeed(IntakeConstants.intakeFeederFeedSpeedPercentage);
-        }
-        else
-        {
+        } else {
             intakeFeederSubsystem.setIntakeSpeed(0);
         }
     }

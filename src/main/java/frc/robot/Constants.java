@@ -25,7 +25,7 @@ public final class Constants
         public static int shooterCanID = 0;
         public static int shooter2CanID = 1;
         public static int shooterIdleRPM = 0;
-        public static double shooterShootRPM = 3031;
+        public static double shooterShootRPM = 2531;
         public static boolean shooterMotorReversed = false;
         public static NeutralModeValue shooterMotorNeutralMode = NeutralModeValue.Brake;
         public static double shooterMotorKp = 5;

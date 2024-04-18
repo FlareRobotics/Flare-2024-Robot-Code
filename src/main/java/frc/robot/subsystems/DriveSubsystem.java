@@ -104,8 +104,8 @@ public class DriveSubsystem extends SubsystemBase {
         this // Reference to this subsystem to set requirements
     );
 
-    xPIDController.setTolerance(0.03);
-    yPIDController.setTolerance(0.03);
+    xPIDController.setTolerance(0.06);
+    yPIDController.setTolerance(0.06);
     rotPIDController.setTolerance(3);
   }
 
